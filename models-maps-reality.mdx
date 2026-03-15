@@ -50,6 +50,23 @@ This seems obvious when stated directly. Nobody confuses a paper map with a city
 
 George Box (1919 to 2013), a statistician, gave us the most quoted sentence in modeling philosophy: "All models are wrong, but some are useful." This is not a criticism of models. It is a instruction manual for using them wisely.
 
+```text
+  The Modeling Pipeline
+
+  Reality        Simplify        Model
+  (complex)  --> (assumptions) --> (equations)
+     ^                              |
+     |                            Solve
+     |                              |
+     |                              v
+  Validate     <-- Compare <--  Prediction
+  (measure real     (does it     (model
+   hardware)        match?)       output)
+
+  If prediction matches reality: useful model
+  If prediction diverges: revise assumptions
+```
+
 ### Why All Models Are Wrong
 
 A model is useful precisely because it simplifies reality. A model that captured every detail of reality would be as complex as reality itself and would take as long to run as the real thing. The value of a model comes from what it leaves out.

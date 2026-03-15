@@ -48,6 +48,25 @@ The best engineering practice combines both questions. You need scientific rigor
 | Testing a prototype | Systematic parameter sweep, control all variables, full statistical analysis | Functional test: does it work under expected conditions? Ship if yes, debug if no |
 | Discovering an anomaly | Investigate deeply; anomalies are where discoveries hide | Assess impact; if it does not affect function or safety, document and move on |
 
+```text
+  The Rigor vs. Pragmatism Spectrum
+
+  RIGOR                              PRAGMATISM
+  (Is this true?)                   (Is this good
+  |                                    enough?)
+  |---|--------|---------|---------|---------|
+  ^   ^        ^         ^         ^         ^
+  Pub- Safety-  Founda-  Production Proto-  Quick
+  lish critical tional   firmware   types   scripts
+  ed   medical  archi-
+  re-  device   tecture
+  search
+
+  More rigor: slower, more certain
+  More pragmatism: faster, more risk
+  Choose based on consequences of failure.
+```
+
 Neither approach is wrong. They are optimized for different objectives. The scientist who never ships anything is not a bad scientist; they are doing science. The engineer who never investigates anomalies is not necessarily a bad engineer, unless the anomaly was safety-relevant.
 
 The problem arises when you apply the wrong approach to the wrong situation.

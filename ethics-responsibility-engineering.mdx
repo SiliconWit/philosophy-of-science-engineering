@@ -280,6 +280,26 @@ Cutting safety margins to save cost is a decision with ethical implications. If 
 
 James Reason's Swiss cheese model of accident causation describes how catastrophic failures occur when multiple layers of defense all have holes, and those holes happen to align. Each layer (design review, testing, quality control, operational procedures, safety monitoring) has imperfections. Most of the time, a hole in one layer is covered by the next layer. Accidents happen when the holes line up.
 
+```text
+  The Swiss Cheese Model (James Reason)
+
+  Hazard                             Accident
+  =====>  |   |    |   |    |   |    =====>
+          | o |    |   |    | o |
+  =====>  |   |    | o |    |   |    =====>
+          |   |    |   |    |   |
+  =====>  | o-|----|-o-|----|-o-|->  FAILURE
+          |   |    |   |    |   |
+  =====>  |   |    |   |    | o |    =====>
+          |   |    |   |    |   |
+         Layer 1  Layer 2  Layer 3
+         Design   Testing  Operations
+         Review   & QC     & Monitoring
+
+  Each layer has holes (imperfections).
+  Accidents happen when holes align.
+```
+
 Every case study in this lesson fits the Swiss cheese model:
 
 | Case | Layer 1 Failure | Layer 2 Failure | Layer 3 Failure |
