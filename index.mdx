@@ -1,0 +1,114 @@
+---
+title: "Philosophy of Science and Engineering"
+description: "Explore the philosophical foundations of engineering practice. Nine lessons connecting Popper, Kuhn, Feynman, and other thinkers to the real problems engineers face every day: testing, modeling, bias, paradigm shifts, and the ethics of building things that matter."
+pubDate: 2026-03-01
+tags: ["philosophy-of-science", "engineering", "critical-thinking", "falsifiability", "paradigm-shifts", "scientific-method", "epistemology", "models", "ethics"]
+excerpt: "Science is not a collection of facts. It is a method for not fooling yourself. This course connects philosophy of science to engineering practice through real case studies, from the Challenger disaster to the Rust vs C debate."
+heroImage: "https://cdn.siliconwit.com/education/philosophy-of-science-engineering/index.png"
+---
+
+import Copyright from '../../../../components/Copyright.astro';
+import TawkWidget from '../../../../components/TawkWidget.astro';
+import { Card, CardGrid, Badge, Steps } from '@astrojs/starlight/components';
+
+Science is not a collection of facts. It is a method for not fooling yourself. This course connects philosophy of science directly to engineering practice. Every lesson uses real case studies, from the Challenger disaster to the transistor revolution, to show how thinkers like Popper, Kuhn, and Feynman illuminate the work engineers do every day. Whether you are debugging firmware, reviewing a vendor datasheet, or choosing between competing technologies, you are doing philosophy of science, whether you realize it or not. #PhilosophyOfScience #Engineering #CriticalThinking
+
+## Why Philosophy for Engineers?
+
+<CardGrid>
+  <Card title="Better Testing" icon="approve-check">
+    Popper showed that the goal of testing is to find failures, not confirm success. This insight transforms how you write test plans, review designs, and evaluate evidence. If you have ever shipped a product that passed all tests and still failed in the field, you need Popper.
+  </Card>
+
+  <Card title="Recognize Paradigm Shifts" icon="star">
+    Kuhn explained why established communities resist new ideas, even when the evidence is overwhelming. Understanding this helps you navigate technology transitions (analog to digital, C to Rust, monolithic to microservices) without being caught on the wrong side.
+  </Card>
+
+  <Card title="Use Models Wisely" icon="open-book">
+    Every simulation, every schematic, every equation is a model. George Box reminded us that all models are wrong, but some are useful. Knowing the difference between the map and the territory is the difference between a good engineer and a dangerous one.
+  </Card>
+
+  <Card title="Intellectual Self-Defense" icon="setting">
+    Pseudoscience, cargo cult engineering, and vendor hype are everywhere. Feynman's "Cargo Cult Science" essay is the best guide ever written for not fooling yourself. This course gives you the tools to spot nonsense.
+  </Card>
+</CardGrid>
+
+## Lessons
+
+<CardGrid>
+  <Card title="Lesson 1: What Makes Something Scientific?" icon="star">
+    [What Makes Something Scientific?](./what-is-science). The demarcation problem: how do you tell science from non-science? Popper's falsifiability criterion, pseudoscience red flags, and the cold fusion debacle. Learn to evaluate engineering claims, datasheets, and research papers.
+  </Card>
+
+  <Card title="Lesson 2: The Scientific Method in Engineering Practice" icon="document">
+    [The Scientific Method in Engineering Practice](./scientific-method-engineering). The textbook version vs the messy reality. Debugging is hypothesis testing, design reviews are peer review, test plans are experiments. Case study: Edison's systematic filament testing.
+  </Card>
+
+  <Card title="Lesson 3: Falsifiability: Testing to Fail" icon="document">
+    [Falsifiability: Testing to Fail](./falsifiability-testing-failure). Popper's key insight applied to engineering: the goal of testing is to find how your design fails, not to confirm it works. Confirmation bias, negative testing, and the Challenger disaster.
+  </Card>
+
+  <Card title="Lesson 4: Paradigm Shifts: How Engineering Knowledge Evolves" icon="document">
+    [Paradigm Shifts](./paradigm-shifts-how-knowledge-evolves). Kuhn's model of scientific revolutions applied to engineering: vacuum tubes to transistors, CISC to RISC, bare metal to RTOS. The Rust vs C debate through Kuhn's lens.
+  </Card>
+
+  <Card title="Lesson 5: Models, Maps, and Reality" icon="document">
+    [Models, Maps, and Reality](./models-maps-reality). "All models are wrong, but some are useful." When SPICE simulations succeed, when financial models catastrophically fail, and how to use engineering models wisely by knowing their assumptions and boundaries.
+  </Card>
+
+  <Card title="Lesson 6: Uncertainty and the Limits of Knowledge" icon="document">
+    [Uncertainty and the Limits of Knowledge](./uncertainty-limits-of-knowledge). What we can know, what we cannot. Measurement uncertainty, chaos theory, complexity, observer effects, and why "more data" does not always help. The Mars Climate Orbiter and defense in depth.
+  </Card>
+
+  <Card title="Lesson 7: Ethics and Responsibility in Engineering" icon="document">
+    [Ethics and Responsibility in Engineering](./ethics-responsibility-engineering). Therac-25, Boeing 737 MAX, Volkswagen emissions. When engineering decisions have life-or-death consequences. Professional codes, whistleblowing, and a practical ethics checklist.
+  </Card>
+
+  <Card title="Lesson 8: Technology, Society, and Unintended Consequences" icon="document">
+    [Technology, Society, and Unintended Consequences](./technology-society-unintended-consequences). Every technology has second-order effects. The automobile, social media, IoT surveillance, AI recommendation engines. The Collingridge dilemma and responsible innovation.
+  </Card>
+
+  <Card title="Lesson 9: Thinking Like a Scientist-Engineer" icon="rocket">
+    [Thinking Like a Scientist-Engineer](./thinking-like-a-scientist-engineer). Synthesis: combining scientific rigor with engineering pragmatism. When to be rigorous, when to ship. Feynman's cargo cult science, engineering notebooks, and building a personal scientific practice.
+  </Card>
+</CardGrid>
+
+## Recommended Reading
+
+These four works form the intellectual backbone of this course. None requires a philosophy background.
+
+| Book | Author | Why It Matters |
+|------|--------|----------------|
+| *The Logic of Scientific Discovery* | Karl Popper | The foundation: science advances by trying to prove itself wrong, not by accumulating confirmations. Directly applicable to engineering test philosophy. |
+| *The Structure of Scientific Revolutions* | Thomas Kuhn | Explains why established paradigms resist change and how revolutionary shifts happen. Essential for understanding technology transitions. |
+| *Cargo Cult Science* (essay, 1974) | Richard Feynman | The most readable warning ever written about fooling yourself with the appearance of rigor. Available free online. |
+| *To Engineer Is Human* | Henry Petroski | How engineering failures drive progress. Bridges the gap between philosophy of science and the messy reality of building things. |
+
+## Who This Course Is For
+
+<Badge text="No prerequisites" variant="success" />
+
+This course is for any engineer, researcher, or technical professional who wants to think more clearly about what they build and why. You do not need a philosophy background. You do not need advanced mathematics. You need curiosity and a willingness to question assumptions, including your own.
+
+**Especially useful if you:**
+- Write test plans and wonder if you are testing the right things
+- Read vendor datasheets and wonder how much to trust them
+- Work in a field undergoing rapid technology change
+- Have ever said "the simulation passed" and then watched the hardware fail
+- Want to build things that actually work, not things that merely appear to work
+
+## Getting Started
+
+<Steps>
+1. **Start with Lesson 1.** Each lesson builds on the previous one, but they are also self-contained enough to read independently.
+
+2. **Read the recommended books.** You do not need to read them before starting the course, but they will deepen your understanding significantly. Feynman's essay is short and free.
+
+3. **Apply immediately.** The value of this course comes from applying the ideas to your own work. After each lesson, look at your current project through the lens of what you just learned.
+
+4. **Discuss.** Philosophy is a conversation, not a lecture. Use the comments on each lesson to share your experiences and challenge the ideas presented.
+</Steps>
+
+<Copyright />
+
+<TawkWidget />
