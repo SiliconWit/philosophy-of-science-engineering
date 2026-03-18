@@ -1,7 +1,7 @@
 ---
 title: "Uncertainty and the Limits of Knowledge"
 description: "Explore what engineers can know precisely, what remains fundamentally uncertain, and how to design responsibly when complete knowledge is impossible."
-contributors: "sam-macharia"
+contributors: "sam-macharia, joseph-muguro"
 pubDate: 2026-03-06
 tags: ["uncertainty", "chaos-theory", "complexity", "safety-margins", "engineering-design"]
 excerpt: "Every measurement has error bars. Every simulation leaves something out. Every prediction has a horizon. This lesson explores the boundaries of what engineers can know and what to do when those boundaries matter."
@@ -344,6 +344,16 @@ The key insight is that redundancy only works if the failure modes are independe
 The choice between these strategies depends on the application. A chemical plant valve should fail closed (fail-safe) to prevent a release. A fire exit should fail open (different kind of fail-safe) to allow evacuation. An aircraft flight control system must fail operational because "fail-safe" is not an option when you are at 35,000 feet.
 
 ### Defense in Depth
+
+```mermaid
+flowchart TD
+    A[Safety Margin\nabsorbs expected uncertainty] --> B[Redundancy\nhandles component failure]
+    B --> C[Monitoring\ndetects drift outside envelope]
+    C --> D[Fail-Safe Mechanisms\nactivate on critical condition]
+    D --> E[Maintenance Schedules\nprevent slow degradation]
+    style A fill:#f0fdf4,stroke:#84cc16
+    style E fill:#fef3c7,stroke:#f59e0b
+```
 
 No single strategy handles all sources of uncertainty. The most robust designs layer multiple strategies:
 

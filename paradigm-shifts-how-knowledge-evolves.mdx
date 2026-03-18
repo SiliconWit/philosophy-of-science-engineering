@@ -1,7 +1,7 @@
 ---
 title: "Paradigm Shifts: How Engineering Knowledge Evolves"
 description: "Kuhn's model of scientific revolutions applied to engineering: vacuum tubes to transistors, CISC to RISC, C to Rust. Why paradigm shifts are resisted, how to recognize them, and what Lakatos adds about progressive vs degenerating research programs."
-contributors: "sam-macharia"
+contributors: "sam-macharia, joseph-muguro"
 pubDate: 2026-03-04
 tags: ["kuhn", "paradigm-shift", "scientific-revolutions", "engineering-history", "rust", "lakatos", "technology-transitions"]
 excerpt: "Kuhn showed that science does not advance smoothly. It lurches between paradigms, with long periods of 'normal science' interrupted by disruptive revolutions. Engineering follows the same pattern, and understanding it can save your career."
@@ -43,32 +43,15 @@ Thomas Kuhn (1922 to 1996) published *The Structure of Scientific Revolutions* i
 4. **Revolution.** A new paradigm emerges that resolves the anomalies. After a period of conflict, the community shifts to the new paradigm. The old paradigm is not just supplemented; it is replaced. The new paradigm redefines the problems, the methods, and the standards of the field.
 </Steps>
 
-```text
-  Kuhn's Cycle of Scientific Revolutions
+```mermaid
+stateDiagram-v2
+    NormalScience --> Crisis: Anomalies accumulate
+    Crisis --> Revolution: Rival paradigm gains support
+    Revolution --> NormalScience: New paradigm becomes the new normal
 
-  +------------------+
-  |  Normal Science  |<-----------+
-  |  (puzzle-solving |            |
-  |   within the     |            |
-  |   paradigm)      |            |
-  +--------+---------+            |
-           |                      |
-     Anomalies accumulate         |
-           |                      |
-           v                      |
-  +------------------+            |
-  |     Crisis       |            |
-  |  (confidence     |            |
-  |   erodes, rival  |   New paradigm
-  |   ideas emerge)  |   becomes the
-  +--------+---------+   new normal
-           |                      |
-           v                      |
-  +------------------+            |
-  |   Revolution     |            |
-  |  (new paradigm   +------------+
-  |   replaces old)  |
-  +------------------+
+    NormalScience: Normal Science\n(puzzle-solving within the paradigm)
+    Crisis: Crisis\n(confidence erodes, rival ideas emerge)
+    Revolution: Revolution\n(new paradigm replaces old)
 ```
 
 ### A Key Nuance: Paradigms Are Not Just Theories

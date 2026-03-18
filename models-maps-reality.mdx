@@ -1,7 +1,7 @@
 ---
 title: "Models, Maps, and Reality"
 description: "All models are wrong, but some are useful. When SPICE simulations succeed, when financial models catastrophically fail, and how to use engineering models wisely by knowing their assumptions, testing their boundaries, and validating against reality."
-contributors: "sam-macharia"
+contributors: "sam-macharia, joseph-muguro"
 pubDate: 2026-03-05
 tags: ["models", "simulation", "epistemology", "george-box", "korzybski", "spice", "engineering-models", "assumptions"]
 excerpt: "Every simulation, every schematic, every equation is a model. It captures some truth and ignores the rest. Understanding the relationship between models and reality is what separates engineers who build things that work from engineers who build things that merely pass simulation."
@@ -50,21 +50,17 @@ This seems obvious when stated directly. Nobody confuses a paper map with a city
 
 George Box (1919 to 2013), a statistician, gave us the most quoted sentence in modeling philosophy: "All models are wrong, but some are useful." This is not a criticism of models. It is a instruction manual for using them wisely.
 
-```text
-  The Modeling Pipeline
-
-  Reality        Simplify        Model
-  (complex)  --> (assumptions) --> (equations)
-     ^                              |
-     |                            Solve
-     |                              |
-     |                              v
-  Validate     <-- Compare <--  Prediction
-  (measure real     (does it     (model
-   hardware)        match?)       output)
-
-  If prediction matches reality: useful model
-  If prediction diverges: revise assumptions
+```mermaid
+flowchart LR
+    A[Reality\ncomplex system] --> B[Simplify\nassumptions]
+    B --> C[Model\nequations]
+    C --> D[Solve]
+    D --> E[Prediction\nmodel output]
+    E --> F{Compare:\ndoes it match?}
+    F -- Yes --> G[Useful model]
+    F -- No --> H[Revise assumptions]
+    H --> B
+    A --> F
 ```
 
 ### Why All Models Are Wrong

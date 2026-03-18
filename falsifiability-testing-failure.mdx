@@ -1,7 +1,7 @@
 ---
 title: "Falsifiability: Testing to Fail"
 description: "Popper's key insight applied to engineering: the goal of testing is to discover how your design fails, not to confirm it works. Confirmation bias, negative testing, the Challenger disaster, and test-driven development as institutionalized falsification."
-contributors: "sam-macharia"
+contributors: "sam-macharia, joseph-muguro"
 pubDate: 2026-03-03
 tags: ["falsifiability", "testing", "popper", "confirmation-bias", "challenger-disaster", "negative-testing", "tdd"]
 excerpt: "The goal of testing is not to show that your design works. It is to find out how it fails. Popper's falsification principle, applied to engineering, transforms how you approach test plans, design reviews, and product validation."
@@ -239,6 +239,14 @@ Every design review, every test readiness review, every go/no-go decision involv
 Test-driven development (TDD) is a software engineering practice that, whether its practitioners realize it or not, embodies Popper's philosophy directly.
 
 ### The TDD Cycle
+
+```mermaid
+flowchart LR
+    A[Write failing test] --> B[Write minimum code to pass]
+    B --> C[Refactor]
+    C --> D[Repeat]
+    D --> A
+```
 
 <Steps>
 1. **Write a failing test.** Before writing any code, write a test that specifies the behavior you want. The test must fail (because the code does not exist yet). This is the falsifiable prediction: "the system should do X."

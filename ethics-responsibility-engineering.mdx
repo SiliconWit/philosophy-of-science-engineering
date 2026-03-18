@@ -1,7 +1,7 @@
 ---
 title: "Ethics and Responsibility in Engineering"
 description: "Examine the moral obligations that come with engineering decisions, through real case studies of catastrophic failures and the professional frameworks designed to prevent them."
-contributors: "sam-macharia"
+contributors: "sam-macharia, joseph-muguro"
 pubDate: 2026-03-07
 tags: ["engineering-ethics", "safety", "professional-responsibility", "case-studies", "whistleblowing"]
 excerpt: "Engineers make decisions that affect human lives. The Therac-25, Boeing 737 MAX, and Volkswagen emissions scandals show what happens when technical competence is not paired with ethical responsibility. This lesson examines real failures and the frameworks that exist to prevent them."
@@ -92,6 +92,16 @@ The 737 MAX had larger, more fuel-efficient engines than the previous 737 NG. Th
 Boeing's solution was MCAS: a software system that automatically pushed the nose down when a single angle-of-attack (AoA) sensor indicated a high angle. The system was designed to make the 737 MAX feel like the 737 NG to pilots, avoiding the need for expensive retraining in a full simulator.
 
 ### The Chain of Failures
+
+```mermaid
+flowchart TD
+    A[Single sensor dependency\nMCAS uses one AoA sensor] --> B[Excessive authority\n2.5 deg repeated activations]
+    B --> C[No pilot notification\nMCAS operates silently]
+    C --> D[Minimal training\nMCAS not in training materials]
+    D --> E[Regulatory capture\nBoeing self-certifies]
+    E --> F[Two crashes, 346 deaths]
+    style F stroke:#ef4444
+```
 
 <Steps>
 1. **Single sensor dependency.** MCAS relied on a single AoA sensor. The 737 MAX had two AoA sensors, but MCAS only used the one on the captain's side. If that sensor failed or gave erroneous data, MCAS would activate based on false information.

@@ -1,7 +1,7 @@
 ---
 title: "Technology, Society, and Unintended Consequences"
 description: "Examine how every technology produces effects beyond its intended purpose, from the automobile's reshaping of cities to social media's transformation of public discourse."
-contributors: "sam-macharia"
+contributors: "sam-macharia, joseph-muguro"
 pubDate: 2026-03-08
 tags: ["technology-society", "unintended-consequences", "responsible-innovation", "collingridge-dilemma", "systems-thinking"]
 excerpt: "The engineers who designed the automobile intended personal transportation. They did not intend suburbs, oil wars, or climate change. Every technology has consequences beyond its original purpose. Understanding these cascading effects is essential for responsible engineering."
@@ -35,28 +35,34 @@ When a new technology enters the world, it produces effects at multiple levels. 
 First-order effects are what the technology is designed to do. Second-order effects are direct consequences of widespread adoption. Third-order effects are systemic changes that reshape society, economics, or the environment. Engineers are typically responsible for the first order and need to think seriously about the second and third.
 </Card>
 
-```text
-  Cascade of Consequences: The Automobile
+```mermaid
+flowchart TD
+    A[1st Order: intended\nPersonal transportation] --> B[Suburbs and commuting]
+    A --> C[Highway construction]
+    A --> D[Oil dependence]
+    A --> E[Air pollution]
+    B --> F[Urban sprawl]
+    D --> G[Geopolitical oil conflicts]
+    E --> H[Climate change]
+    B --> I[Sedentary lifestyles]
+    F --> J[Social isolation]
 
-  1st Order (intended)
-  |  Personal transportation
-  |
-  +---> 2nd Order (direct consequences)
-  |     |  Suburbs and commuting
-  |     |  Highway construction
-  |     |  Oil dependence
-  |     |  Air pollution
-  |     |
-  |     +---> 3rd Order (systemic changes)
-  |           |  Urban sprawl
-  |           |  Climate change (CO2)
-  |           |  Geopolitical oil conflicts
-  |           |  Sedentary lifestyles
-  |           |  Social isolation
-  |
-  Each order is harder to predict
-  and harder to reverse.
+    subgraph 2nd Order
+        B
+        C
+        D
+        E
+    end
+    subgraph 3rd Order
+        F
+        G
+        H
+        I
+        J
+    end
 ```
+
+Each order is harder to predict and harder to reverse.
 
 ### The Automobile: A Complete Case Study
 

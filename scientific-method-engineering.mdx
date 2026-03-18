@@ -1,7 +1,7 @@
 ---
 title: "The Scientific Method in Engineering Practice"
 description: "The textbook scientific method versus the messy reality. Debugging is hypothesis testing, design reviews are peer review, test plans are experiments. Case study: Edison's systematic approach to invention."
-contributors: "sam-macharia"
+contributors: "sam-macharia, joseph-muguro"
 pubDate: 2026-03-02
 tags: ["scientific-method", "engineering", "hypothesis-testing", "debugging", "reproducibility", "edison"]
 excerpt: "Engineers use the scientific method every day without calling it that. Debugging is hypothesis testing, design reviews are peer review, and every test plan is an experiment. Understanding this connection makes you better at all three."
@@ -31,32 +31,18 @@ Every engineering textbook presents the scientific method as a clean, linear pro
 
 You have probably seen this diagram in some form since middle school:
 
-```
-  Observation
-      |
-      v
-  Question
-      |
-      v
-  Hypothesis
-      |
-      v
-  Prediction
-      |
-      v
-  Experiment
-      |
-      v
-  Analysis
-     / \
-    /   \
-   v     v
-Supports  Refutes
-hypothesis hypothesis
-   |         |
-   v         v
- More     Revise
- tests   hypothesis
+```mermaid
+flowchart TD
+    A[Observation] --> B[Question]
+    B --> C[Hypothesis]
+    C --> D[Prediction]
+    D --> E[Experiment]
+    E --> F[Analysis]
+    F --> G{Result?}
+    G -- Supports hypothesis --> H[More tests]
+    G -- Refutes hypothesis --> I[Revise hypothesis]
+    I --> C
+    H --> E
 ```
 
 This model is not wrong. It captures something real about how knowledge advances. But it is idealized in ways that can mislead engineers.
@@ -96,32 +82,17 @@ The textbook version implies that scientists (and engineers) follow these steps 
 
 Here is the key insight of this lesson: engineers use the scientific method constantly, just under different names. Once you see the parallels, you can borrow tools and discipline from one domain to improve the other.
 
-```text
-  The Scientific Method Cycle
-  (with engineering equivalents)
-
-       Observe (Bug report)
-            |
-            v
-    +-> Hypothesize (Root cause)
-    |       |
-    |       v
-    |   Predict (Expected behavior)
-    |       |
-    |       v
-    |   Test (Measurement/prototype)
-    |       |
-    |       v
-    |   Analyze (Data review)
-    |      / \
-    |     /   \
-    | Supports  Refutes
-    |   |         |
-    |   v         v
-    | Verify    Revise
-    | (Replicate) (New hypothesis)
-    |               |
-    +---------------+
+```mermaid
+flowchart TD
+    A[Observe\nBug report] --> B[Hypothesize\nRoot cause]
+    B --> C[Predict\nExpected behavior]
+    C --> D[Test\nMeasurement / prototype]
+    D --> E[Analyze\nData review]
+    E --> F{Result?}
+    F -- Supports --> G[Verify\nReplicate]
+    F -- Refutes --> H[Revise\nNew hypothesis]
+    H --> B
+    G --> D
 ```
 
 ### The Translation Table
