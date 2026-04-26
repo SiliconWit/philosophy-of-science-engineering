@@ -32,8 +32,69 @@ Nine lessons on what makes something scientific, how knowledge evolves, the limi
 
 ## How to Contribute
 
-1. Fork: [SiliconWit/philosophy-of-science-engineering](https://github.com/SiliconWit/philosophy-of-science-engineering)
-2. Branch, commit, PR against `main`
+All commands below work on Linux, macOS, and Windows (using Git Bash, PowerShell, or Command Prompt with Git installed).
+
+### For Team Members (with push access)
+
+**First time setup (clone the repo once):**
+
+```bash
+git clone https://github.com/SiliconWit/philosophy-of-science-engineering.git
+cd philosophy-of-science-engineering
+```
+
+**Every time you start working:**
+
+```bash
+git pull origin main
+```
+
+Always pull before making changes. This avoids conflicts with other contributors.
+
+**After making your changes:**
+
+```bash
+git add .
+git commit -m "Brief description of what you changed"
+git push origin main
+```
+
+**If you get a push error** (someone pushed before you):
+
+```bash
+git pull origin main
+```
+
+Git will merge the changes automatically in most cases. If there is a conflict, Git will mark the conflicting lines in the file. Open the file, choose which version to keep, then:
+
+```bash
+git add .
+git commit -m "Resolve merge conflict"
+git push origin main
+```
+
+**Tips to avoid conflicts:**
+
+- Always `git pull origin main` before you start working
+- Push your changes as soon as you are done, do not hold onto uncommitted work for long
+- Coordinate with other contributors so two people are not editing the same file at the same time
+
+### For External Contributors (without push access)
+
+1. Fork the repository: [SiliconWit/philosophy-of-science-engineering](https://github.com/SiliconWit/philosophy-of-science-engineering)
+2. Clone your fork:
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/philosophy-of-science-engineering.git
+   cd philosophy-of-science-engineering
+   ```
+3. Make your changes and commit:
+   ```bash
+   git add .
+   git commit -m "Brief description of what you changed"
+   git push origin main
+   ```
+4. Open a Pull Request against `main` on the original repository
+5. Describe what you changed and why in the PR description
 
 ## Content Standards
 
