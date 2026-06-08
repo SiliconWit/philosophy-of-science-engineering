@@ -27,7 +27,63 @@ import PhilosophyOfScienceEngineeringComments from '../../../../components/philo
 
 A vendor tells you their new chip "uses AI for predictive maintenance." A colleague claims their debugging technique "always works." A research paper reports a breakthrough in room-temperature superconductors. How do you know which of these claims to take seriously? The answer has been debated for centuries, and it starts with a deceptively simple question: what makes something scientific? #PhilosophyOfScience #Falsifiability #CriticalThinking
 
+## What Science Is
+
+Before you can judge whether a claim is scientific, it helps to be clear about what science actually is. Science is two things at once: a **process** for working out how nature behaves, and the **body of knowledge** that process builds up. The two feed each other. You run experiments, the trustworthy results become established knowledge, and that knowledge shapes the next questions you ask.
+
+```mermaid
+flowchart TD
+    A[Question] --> B[Hypothesis]
+    B --> C[Experiment]
+    C --> D[Evidence]
+    D --> E{Supports the claim?}
+    E -- Yes --> F[Body of knowledge]
+    E -- No --> B
+    F -->|raises new questions| A
+```
+
+This loop is why science is never truly finished. The body of knowledge is the best current account of how nature works, not a final one. A result stays in good standing only as long as the evidence keeps supporting it.
+
+### Branches of Science
+
+Science is not a single activity. It splits into branches that ask different kinds of questions and accept different kinds of evidence.
+
+| Branch | Examples | What it studies | How it checks a claim |
+|--------|----------|-----------------|-----------------------|
+| Formal | Mathematics, Logic, Computer Science | Abstract structures and rules | Proof and internal consistency |
+| Natural | Physics, Chemistry, Biology | The physical world | Observation and controlled experiment |
+| Applied | Engineering, Medicine | Solving real problems with natural-science knowledge | Whether it works, measurably and repeatably |
+| Social | Psychology, Economics, Political Science | Human behavior and societies | Data, statistics, and controlled studies |
+
+Engineering lives in the applied branch. It borrows the methods of the natural sciences and is held to the same standard of evidence: a design either meets its measured specification or it does not. The formal sciences are a useful edge case. A mathematical theorem is not overturned by an experiment; it is established or refuted by logic. That is a reminder that "testable by experiment," the criterion we are about to examine, captures most of science but not quite all of it.
+
+## The Hallmarks of Scientific Knowledge
+
+<InArticleAd />
+
+
+Across all of these branches, scientific knowledge shares a recognizable profile. No single trait defines science on its own, but together they form a checklist worth running whenever you are deciding if something deserves the name.
+
+| Hallmark | What it means | What it looks like in engineering |
+|----------|---------------|-----------------------------------|
+| Empirical | Claims rest on observation and measurement, not authority or intuition | A specification backed by test data, not by "trust me" |
+| Falsifiable | Some possible result would prove the claim wrong | A timing requirement that names the value counting as a failure |
+| Reproducible | Independent people, in other places, get the same result | If only your bench reproduces it, it is not established |
+| Objective | The result does not depend on who is doing the looking | A calibrated meter reading over "it feels better to me" |
+| Rational | The claim is logically consistent and does not contradict itself | A model whose assumptions hold together under scrutiny |
+| Tentative | Conclusions are provisional and yield to better evidence | A new datasheet revision supersedes the old one |
+| Predictive | The claim forecasts outcomes you have not yet observed | A thermal model that predicts junction temperature before the board exists |
+
+<Card title="The core discipline of science" icon="star">
+In science you change your beliefs to fit the evidence, rather than bending the evidence to fit your beliefs. Every hallmark above is a way of enforcing that one rule.
+</Card>
+
+Two practices keep these hallmarks honest. **Peer review** means a claim is scrutinized by independent people before it is trusted; in engineering, the design review plays the same role. **Prediction** is the sharpest test of all. A claim that reliably forecasts a measurement you have not yet taken is hard to fake, because nature gets the final vote. Anyone can explain yesterday after the fact; a working theory tells you what tomorrow's instrument will read.
+
 ## The Demarcation Problem
+
+<InArticleAd />
+
 
 The demarcation problem is philosophy's name for a practical question: where do you draw the line between science and non-science? This is not an abstract concern. Engineers encounter the boundary every day.
 
@@ -231,6 +287,22 @@ For any research paper or technical report, ask these five questions before acce
 4. **Conflicts of interest.** Is the study funded by the company whose product is being tested? This does not invalidate the results, but it changes how much independent verification you should require.
 
 5. **Replication.** Have other groups reproduced the results? If the paper is new, has the methodology been described in enough detail for replication to be possible?
+
+## What Science Cannot Yet Answer
+
+<InArticleAd />
+
+
+Science is the most reliable process we have for understanding nature, but it is not finished, and being honest about its limits is part of what makes it scientific. Some questions remain open, and a few may stay open for a long time:
+
+- Why is there something rather than nothing?
+- How did non-living chemistry first give rise to living cells?
+- What, physically, is consciousness?
+- Is there life anywhere else in the universe?
+
+These are not dead ends, and they are not invitations to fill the gap with guesswork. Each one is an active field of research. Cosmology, origin-of-life chemistry, neuroscience, and astrobiology all attack these questions with real experiments and real data. The discipline is in resisting the urge to claim more than the evidence supports. A field that announced a complete, settled answer to every one of these would be making a far stronger claim than its evidence could carry, and that overreach is itself one of the red flags from the checklist earlier in this lesson.
+
+Admitting the unknown is also how science makes progress. Much of what looks irreducibly complex turns out to emerge from simple rules applied at scale, the way the temperature of a gas emerges from the motion of countless individual molecules. Every answered question tends to expose new ones, and the body of knowledge grows precisely because it stays honest about its own edges. Where measurement itself runs into hard limits, the lesson on [the limits of knowledge](/education/philosophy-of-science-engineering/uncertainty-limits-of-knowledge) takes this further.
 
 ## From Philosophy to Practice
 
