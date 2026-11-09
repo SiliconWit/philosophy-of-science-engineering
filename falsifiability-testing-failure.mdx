@@ -25,38 +25,37 @@ import { Card, CardGrid, Badge, Steps, LinkButton, FileTree } from '@astrojs/sta
 
 import PhilosophyOfScienceEngineeringComments from '../../../../components/philosophy-of-science-engineering/PhilosophyOfScienceEngineeringComments.astro';
 
-"My firmware passed all tests." This statement should make you nervous. It tells you nothing about whether the firmware works. It only tells you that the specific tests you wrote did not catch a failure. The question that matters is: how hard did you try to make it fail? This is the essence of Popper's contribution to science, and it is the single most important idea in this course for practicing engineers. #Falsifiability #Testing #Engineering
+A new cold room passes its commissioning check, the check made before an installation is handed to its owner. The technician switched it on, on a cool morning with the room empty, watched it reach 4 °C and signed the form. On the first hot afternoon, full of warm produce, it stays at 9 °C for hours. The check told you nothing, because the room could not have failed it. A test is worth only what it could have shown you. This lesson gives you the question to ask of any test: how hard did it try to make the system fail? #Falsifiability #Testing #Engineering
 
 ## The Asymmetry of Evidence
 
-Popper's central insight is that confirmation and refutation are not symmetric. You can never prove a universal claim true, but you can prove it false with a single counterexample.
+Karl Popper, a philosopher of science, saw that confirming a general claim and refuting it are not equal tasks. No number of agreeing cases proves a general claim true. One case against it proves it false.
 
-Consider the claim: "All swans are white." You could observe a million white swans, and the claim would be consistent with all your evidence. But one black swan destroys it entirely. The million confirmations were informative but not conclusive. The single refutation is decisive.
+Take the claim "All swans are white". A million white swans agree with it and prove nothing. One black swan ends it.
 
 ### In Engineering Terms
 
 | Claim | 1000 Confirmations | 1 Refutation |
 |-------|-------------------|--------------|
-| "Our firmware never crashes" | 1000 hours without a crash | One crash disproves the claim |
+| "The standby generator always starts" | 1000 good test starts | One failed start disproves the claim |
 | "The bridge supports 10 tons" | 1000 trucks cross safely | One collapse disproves the claim |
-| "The encryption is secure" | 1000 failed attack attempts | One successful attack disproves the claim |
+| "The cold room never passes 8 °C" | 1000 hours below 8 °C | One hour at 9 °C disproves the claim |
 | "The sensor reads within 1% accuracy" | 1000 accurate readings | One reading outside 1% disproves the claim |
 
-This asymmetry has a profound implication: **the most informative test is the one most likely to produce a failure.** If you only test cases you expect to work, you are optimizing for confirmation rather than information.
+So **the test that teaches you most is the test most likely to produce a failure.** If you test only the cases you expect to pass, you collect confirmations and learn little.
 
 ```text
-  The Asymmetry of Evidence
+ Claim: "all swans are white"
 
-  "All swans are white"
-
-  White swan #1     ........  adds a little
-  White swan #2     .......   confidence
-  White swan #100   ......    but never proves
-  White swan #1000  .....     the claim
-       :               :
-  =============================
-  ONE black swan    XXXXX  disproves it
-                           entirely
+ ┌─────────────────────┐
+ │ white swan 1        │   each one adds a little
+ │ white swan 2        │   confidence, and none
+ │ ...                 │   of them proves the claim
+ │ white swan 1000     │
+ └─────────────────────┘
+ ┌─────────────────────┐
+ │ ONE black swan      │──> the claim is false
+ └─────────────────────┘
 ```
 
 ## Confirmation Bias in Testing
@@ -64,106 +63,116 @@ This asymmetry has a profound implication: **the most informative test is the on
 <InArticleAd />
 
 
-Confirmation bias is the human tendency to seek, interpret, and remember evidence that confirms your existing beliefs. It is universal, powerful, and deeply destructive in engineering.
+Confirmation bias is the habit of looking for, and remembering, the evidence that agrees with what you already believe. Everyone has it. In testing it works in four ways.
 
 ### How Confirmation Bias Infects Testing
 
 <Steps>
-1. **Test selection bias.** You naturally write tests for the scenarios you thought about during design. These are the cases you expect to work. The cases you did not think about (the ones most likely to reveal bugs) remain untested.
+1. **You choose the tests.** You write tests for the cases you thought of during design, and those are the cases you expect to pass. The cases you did not think of are the ones most likely to hide a fault.
 
-2. **Interpretation bias.** When a test result is ambiguous, you tend to interpret it as passing. "The output was 3.38V instead of 3.30V, but that is probably within tolerance." Is it? Did you check the specification? Or did you want it to pass?
+2. **You read the result kindly.** "The room reached 8.4 °C against a limit of 8.0 °C, but that is close enough." Did you check the specification, or did you want a pass?
 
-3. **Memory bias.** You remember the 47 tests that passed and forget the 3 flaky tests that you "could not reproduce." Those unreproducible failures often turn out to be real problems with intermittent triggers.
+3. **You forget the odd failures.** You remember the 47 tests that passed and forget the 3 that failed once and "could not be repeated". Such a failure is often a real fault with a rare trigger.
 
-4. **Sunk cost reinforcement.** The more time you have invested in a design, the less willing you become to find problems with it. After three months of development, you are psychologically invested in the design working. This makes you a worse tester of your own work.
+4. **You have invested.** After three months of work on a design, you want it to work. That makes you a poor tester of it.
 </Steps>
 
 ### The Happy Path Problem
 
 <Card title="Happy Path Testing" icon="warning">
-Testing only the expected use cases and ignoring edge cases, error conditions, and adversarial inputs. This is the most common manifestation of confirmation bias in engineering testing.
+The happy path is the case where everything goes as planned: the right input, in the right order, under normal conditions. Testing only the happy path is the most common form of confirmation bias in testing.
 </Card>
 
-```
-Happy Path (what you test):
-  Valid input -> Expected output -> PASS
+Take the commissioning of a controller that runs a borehole pump to fill a tank.
 
-What you should also test:
-  No input -> Graceful handling?
-  Maximum input -> Buffer overflow?
-  Negative input -> Undefined behavior?
-  Rapid repeated input -> Race condition?
-  Input during initialization -> Crash?
-  Input with bit errors -> Corruption?
-  Power loss during processing -> Data loss?
-  Two inputs simultaneously -> Deadlock?
-```
+| What is usually tested | What should also be tested |
+|------------------------|----------------------------|
+| The tank is low: the pump starts | The level sensor is unplugged: does the pump stop, or run without end? |
+| The tank is full: the pump stops | The borehole runs dry: does the pump stop before it is damaged? |
+| | The power fails and returns during a run: does the pump restart safely? |
+| | The supply voltage is low: does the controller stop the pump? |
+| | Two commands arrive together: which one wins? |
 
-If your test plan only covers the first line, you have not tested your system. You have confirmed your assumptions.
+If your test plan holds only the left column, you have not tested the system. You have confirmed your assumptions.
 
 ## Negative Testing: The Popperian Approach
 
 <InArticleAd />
 
 
-Negative testing is the deliberate attempt to make your system fail. It is Popper's falsification principle applied directly to engineering. Instead of asking "does it work?", you ask "how does it break?"
+A negative test is a deliberate attempt to make the system fail. It is Popper's idea applied to engineering: you stop asking "does it work?" and ask "how does it break?"
 
 ### Categories of Negative Tests
 
 <Tabs>
 <TabItem label="Boundary Conditions">
-Test at the exact edges of specified ranges:
+Test at the exact edges of the specified ranges:
 
-- Input voltage at minimum spec, maximum spec, and 1% beyond each
-- Temperature at the extremes of the operating range
-- Data buffers at exactly their maximum capacity
-- Timer values at zero, one, maximum, and rollover
-- Array indices at 0, length-1, and length (out of bounds)
+- supply voltage at the minimum, at the maximum, and 1% beyond each
+- temperature at both ends of the operating range
+- a tank, a buffer or a memory at exactly full
+- a timer at zero, at its maximum, and at the moment it returns to zero
 
-If your specification says "operates from 3.0V to 3.6V," test at 2.9V and 3.7V. What happens outside the specified range is often more informative than what happens inside it.
+If the specification says "operates from 3.0 V to 3.6 V", test at 2.9 V and 3.7 V as well. What happens outside the range often tells you more than what happens inside it.
 </TabItem>
 
 <TabItem label="Invalid Inputs">
-Deliberately provide inputs that violate assumptions:
+Give the system inputs that break its assumptions:
 
-- Null pointers where the code expects valid data
-- Strings where the code expects numbers
-- Negative values where the code expects positive
-- UTF-8 multi-byte characters in fixed-width fields
-- Malformed packets on a communication bus
-- Commands sent in the wrong sequence
+- a sensor that is unplugged, shorted, or reads an impossible value
+- text where the program expects a number
+- a negative value where only positive values make sense
+- a damaged message on a communication line
+- commands sent in the wrong order
 
-Every input validation you forgot is a bug waiting for a user to discover.
+Every input check that you forgot is a fault that a user will find for you.
 </TabItem>
 
 <TabItem label="Stress and Overload">
-Push the system beyond its design capacity:
+Push the system past its design capacity:
 
-- Maximum number of simultaneous connections
-- Continuous operation at 100% CPU for 72 hours
-- Memory allocation until heap exhaustion
-- Rapid power cycling (on-off-on every 100 ms)
-- Communication bus at maximum throughput with no idle gaps
+- full load without a pause for 72 hours
+- memory used until none is left
+- power switched off and on every 100 ms
 
-Stress testing reveals assumptions you did not know you made.
+A stress test shows the assumptions you did not know you had made.
 </TabItem>
 
 <TabItem label="Environmental">
-Subject the system to real-world environmental conditions:
+Put the system in the conditions of the real site:
 
-- Temperature cycling (hot to cold to hot rapidly)
-- Electromagnetic interference (EMI) from nearby motors, radios, switching supplies
-- Vibration and mechanical shock
-- Humidity extremes
-- Power supply noise, dropouts, and surges
+- fast changes from hot to cold and back
+- electrical interference from nearby motors and radios
+- vibration, dust and humid air
+- a supply with noise, short dropouts and surges
 
-The lab is not the field. Environmental testing bridges that gap.
+The laboratory is not the site.
 </TabItem>
 </Tabs>
 
+### A worked case: a commissioning check that can fail
+
+The cold room of the opening must hold produce between 2 and 8 °C. Write its commissioning check again, so that the room can fail it.
+
+<Steps>
+1. **Write the claim with numbers.** "On a hot afternoon, with a normal day's loading, the air in the room does not stay above 8 °C for more than 30 minutes."
+
+2. **List the conditions most likely to break it.** High outdoor temperature. A full load of warm produce. A door that is opened often. The first check, an empty room on a cool morning, had none of these.
+
+3. **Write the failing result before the test.** The room fails if the logger shows the air above 8 °C for more than 30 minutes without a break.
+
+4. **Run the hardest case.** At 14:00, with 33 °C outdoors, the staff load 800 kg of produce at field temperature. The logger shows the air above 8 °C for 50 minutes, with a peak of 9.5 °C.
+
+5. **Read the result.** 50 minutes against a limit of 30: the room has failed. It can hold a cold load, but it cannot cool 800 kg of warm produce at one time.
+
+6. **Change one thing and test again.** The load is split into batches of 300 kg, one hour apart. On a similar afternoon the air is above 8 °C for 10 minutes, with a peak of 8.3 °C. The room passes, and the loading rule is written into the handover papers.
+</Steps>
+
+The first check produced a signature. The second produced a failure before any stock was lost, and a rule that prevents it.
+
 ### Fuzz Testing: Automated Falsification
 
-Fuzz testing (fuzzing) is the automated generation of random, malformed, or unexpected inputs to find crashes, hangs, and security vulnerabilities. It is Popper's falsification principle implemented as software.
+Fuzz testing, or fuzzing, is a negative test run by a machine. A program sends very large numbers of random and damaged inputs to the program under test and records every crash, hang or wrong answer.
 
 ```
 Basic Fuzzing Concept:
@@ -177,66 +186,54 @@ Basic Fuzzing Concept:
       // You now know something you didn't before.
 ```
 
-Fuzzing has found critical bugs in virtually every major software project, from web browsers to operating systems to embedded firmware. It works because it tests inputs that no human would think to try.
+Fuzzing has found serious faults in web browsers, operating systems and embedded firmware. It works because it tries inputs that no person would think of.
 
 ## Case Study: The Challenger Disaster
 
 <InArticleAd />
 
 
-On January 28, 1986, the Space Shuttle Challenger broke apart 73 seconds after launch, killing all seven crew members. The cause was a failure of an O-ring seal in the right solid rocket booster. But the deeper cause was a failure of reasoning that Popper would have recognized immediately.
+On January 28, 1986, the Space Shuttle Challenger broke apart 73 seconds after launch, and all seven crew members died. The technical cause was a seal that failed in the right solid rocket booster. The deeper cause was an error of reasoning about evidence.
 
 ### The Technical Problem
 
-The O-rings sealed the joints between segments of the solid rocket boosters. They were designed to compress and maintain a gas-tight seal under the enormous pressure of ignition. At low temperatures, the rubber O-rings became stiff and lost their ability to seal properly.
+The boosters were built in segments. Rubber rings called O-rings sealed the joints between the segments against the hot gas inside. In the cold, the rubber became stiff and sealed poorly.
 
 ### The Evidence Before Launch
 
-Engineers at Morton Thiokol (the booster manufacturer) had data showing O-ring damage on previous flights. The pattern was clear to some engineers:
+Engineers at Morton Thiokol, the maker of the boosters, had records of O-ring damage on earlier flights:
 
 | Flight | Temperature at Launch | O-Ring Damage |
 |--------|----------------------|---------------|
 | STS-51C | 53 F (12 C) | Severe erosion |
-| STS-61A | 75 F (24 C) | No damage |
-| STS-61C | 65 F (18 C) | Minor erosion |
+| STS-61A | 75 F (24 C) | Blow-by at two joints |
+| STS-61C | 58 F (14 C) | Erosion |
 | STS-51L (Challenger) | 36 F (2 C) | Catastrophic failure |
 
-The night before launch, Thiokol engineers Roger Boisjoly and Allan McDonald argued against launching. The forecast temperature of 36 F was far below any previous launch temperature.
+The temperatures for the earlier flights are the calculated joint temperatures used by the Rogers Commission, which investigated the accident. Seen flight by flight, the record looked mixed, because damage had also occurred on a warm day. Seen as a whole, it did not: every flight below 65 F had O-ring damage, and only a few of the warmer flights did.
+
+The night before the launch, the Thiokol engineers Roger Boisjoly and Allan McDonald argued against it. The forecast was for temperatures near or below freezing, far colder than at any earlier launch. It was 36 F at the moment of launch.
 
 ### The Reasoning Failure
 
-Here is where philosophy of science becomes a matter of life and death. NASA managers asked Thiokol to **prove that it was not safe to launch.** This is the wrong question. It inverts the burden of proof.
+NASA managers asked Thiokol to **prove that it was not safe to launch.** That is the wrong question. It puts the burden of proof on the wrong side.
 
 <Card title="The Inverted Question" icon="warning">
-The correct question, from Popper's perspective, is not "Can you prove it is unsafe?" but "Can you prove it IS safe at this temperature?" Since no shuttle had ever launched below 53 F, there was no evidence of safety at 36 F. The absence of evidence of failure is not evidence of safety.
+The right question is not "Can you prove it is unsafe?" but "Can you show that it is safe at this temperature?" No shuttle had launched below 53 F, so there was no evidence of safety at 36 F. No evidence of failure is not evidence of safety.
 </Card>
 
-The managers committed a classic confirmation bias error: they looked at launches where nothing went wrong and concluded the system was safe, ignoring the correlation between temperature and O-ring damage. They asked for the wrong kind of evidence.
-
-### Popper Applied to Challenger
-
-If the decision-makers had applied Popper's framework:
-
-<Steps>
-1. **State the claim as a falsifiable hypothesis.** "The O-ring seals function correctly at 36 F." This is a specific, testable claim.
-
-2. **Ask what evidence would refute it.** O-ring erosion or blow-by at temperatures near 36 F would refute it. And there was no data at all for temperatures below 53 F.
-
-3. **Evaluate the evidence honestly.** The available data showed a clear trend: more damage at lower temperatures. Extrapolating to 36 F suggested significant risk. The absence of data below 53 F was itself a red flag.
-
-4. **Apply the precautionary version of falsification.** When lives are at stake and you cannot prove safety, do not launch. The burden of proof must be on demonstrating safety, not on demonstrating danger.
-</Steps>
+The managers looked at the launches where nothing went wrong and concluded that the system was safe. That is confirmation bias. They did not weigh the link between temperature and O-ring damage.
 
 ### The Lesson for Engineers
 
-Every design review, every test readiness review, every go/no-go decision involves the same logic. The question is never "can you prove there is a problem?" The question is always "can you prove it is safe?" If you cannot prove safety, you are not ready.
+The claim that needed testing was "the O-ring seals work at 36 F", and 36 F was far below any flight in the record. Every design review and every decision to go ahead uses the same logic. Do not ask "can you prove there is a problem?" Ask "can you show that it is safe?" If you cannot, you are not ready.
 
 ## Test-Driven Development as Institutionalized Falsification
 
 <InArticleAd />
 
 
-Test-driven development (TDD) is a software engineering practice that, whether its practitioners realize it or not, embodies Popper's philosophy directly.
+Test-driven development (TDD) is a software practice with one rule: write the test before the code. It builds Popper's idea into daily work.
 
 ### The TDD Cycle
 
@@ -249,60 +246,35 @@ flowchart TD
 ```
 
 <Steps>
-1. **Write a failing test.** Before writing any code, write a test that specifies the behavior you want. The test must fail (because the code does not exist yet). This is the falsifiable prediction: "the system should do X."
+1. **Write a failing test.** Before any code exists, write a test for the behavior you want. It must fail, because the code is not there yet.
 
-2. **Write the minimum code to pass the test.** Implement just enough to make the test pass. No more. This forces you to solve the specific problem rather than building speculative infrastructure.
+2. **Write the minimum code to pass the test.** Solve this problem and nothing more.
 
-3. **Refactor.** Clean up the code while the tests ensure you have not broken anything. The tests are your safety net.
+3. **Refactor.** Tidy the code without changing what it does. The tests show at once if you broke something.
 
-4. **Repeat.** Each cycle adds a new falsifiable claim about the system's behavior and a test that can detect if that claim is violated.
+4. **Repeat.** Each cycle adds one claim about the system and one test that can catch its failure.
 </Steps>
 
 ### Why TDD Is Popperian
 
-In TDD, you write the test before the code. This means you are defining the falsification criterion before you have anything to test. You are specifying, in advance, what would count as failure. This is exactly what Popper demands: state your prediction before you see the data.
-
-Contrast this with the common practice of writing tests after the code is complete. When you write tests after the fact, you are unconsciously influenced by knowledge of how the code actually works. You test the paths you know succeed. You avoid the paths you suspect might fail. This is confirmation bias embedded in your workflow.
+Because the test comes first, you say what counts as failure before you have anything to test. A test written after the code is shaped by what you know of the code: you test the paths that you know succeed. That is confirmation bias built into the working method.
 
 ### Beyond Software: Test-First Hardware
 
-The TDD principle applies to hardware too, even though the cycle is slower:
-
-| TDD Step | Hardware Equivalent |
-|----------|-------------------|
-| Write failing test | Define acceptance criteria and test procedure before designing the circuit |
-| Write minimum code | Build the simplest prototype that addresses the specification |
-| Refactor | Optimize the design while re-running the acceptance tests |
-| Repeat | Add specifications incrementally, testing each one |
-
-Writing your test procedure before your design forces you to think clearly about what "working" actually means. It prevents the common trap of designing first and then writing tests that happen to pass.
+The rule works outside software. Write the acceptance test into the order before the supplier builds anything. A test procedure written before the design forces you to say what "working" means. A test written afterwards tends to be a test that passes.
 
 ## Engineering Tools That Embody Falsification
 
 <InArticleAd />
 
 
-Several engineering practices are direct implementations of Popper's falsification principle, even though they were not consciously designed that way.
+Several standard practices are organised attempts to make a system fail. Each has its own question.
 
-### Stress Testing
-
-Deliberately operating a system beyond its design limits to find the failure mode. "At what temperature does the solder joint crack?" is a falsification question. You are trying to find the point of failure, not confirm that it works.
-
-### Fault Injection
-
-Deliberately introducing faults (corrupted data, dropped packets, power glitches, stuck bits) to test error handling. "What happens when the SPI bus glitches during a flash write?" is a request for falsification.
-
-### Penetration Testing
-
-Hiring specialists to attack your system. "Can you break in?" is an explicit invitation to falsify the claim that your system is secure.
-
-### Failure Mode and Effects Analysis (FMEA)
-
-Systematically considering every possible failure mode, its effects, and its likelihood. FMEA is a structured exercise in asking "how could this go wrong?" before it goes wrong.
-
-### Design of Experiments (DOE)
-
-A statistical framework for varying multiple factors simultaneously while maintaining the ability to isolate their individual effects. DOE is the sophisticated version of "change one variable at a time," designed to extract maximum information from minimum tests.
+- **Stress testing.** "At what load or temperature does it fail?" You look for the breaking point, not for a pass.
+- **Fault injection.** "What happens when I cause this fault?" You cut the power or disconnect a sensor on purpose.
+- **Penetration testing.** "Can you break in?" Specialists are paid to attack the system.
+- **Failure mode and effects analysis (FMEA).** "How could each part fail, and what would follow?"
+- **Design of experiments (DOE).** "Which of these factors matters?" A statistical plan changes several factors together and can still separate their effects.
 
 ## The Question That Should Start Every Design Review
 
@@ -311,33 +283,19 @@ A statistical framework for varying multiple factors simultaneously while mainta
 
 "How hard did you try to prove yourself wrong?"
 
-This single question, asked sincerely and answered honestly, reveals the quality of your testing better than any metric or test coverage number.
-
 <CardGrid>
   <Card title="Weak Answer" icon="warning">
-    "We ran all the tests and they passed." This tells you nothing about the quality of the tests themselves. Did the tests include negative cases? Boundary conditions? Environmental stress? Adversarial inputs?
+    "We ran all the tests and they passed." This says nothing about the tests. Did any of them try the edges of the range, a failed sensor, a hot day?
   </Card>
 
   <Card title="Strong Answer" icon="approve-check">
-    "We tested 47 boundary conditions, ran 8 hours of fuzz testing, injected 12 fault types, and stress-tested at temperatures from minus 20 to plus 85 degrees C. We found and fixed three issues. Here they are." This tells you the team actively tried to break their own design.
+    "We tested 47 boundary conditions, injected 12 kinds of fault and tested from minus 20 to plus 85 degrees C. We found three problems and fixed them. Here they are." This team tried to break its own design.
   </Card>
 </CardGrid>
 
 ### Building a Falsification Culture
 
-Creating a team culture where finding bugs is celebrated rather than punished is essential for effective falsification.
-
-**What kills falsification:**
-- Punishing engineers who find bugs close to a deadline
-- Treating test failures as personal failures of the developer
-- Pressuring testers to "keep the numbers green"
-- Rewarding "zero bugs found" as if it means "zero bugs exist"
-
-**What enables falsification:**
-- Celebrating bug discovery as valuable information
-- Tracking "bugs found before release" as a positive metric
-- Giving testers the authority to stop a release
-- Rewarding thoroughness over speed in testing
+A team finds faults only where finding them is welcome. Blame for the person who finds a fault close to a deadline, pressure to "keep the numbers green", and praise for "no faults found" all stop the search. Thanks for a fault found before release, and authority for testers to stop a release, keep it alive.
 
 ## Key Takeaways
 
@@ -346,38 +304,38 @@ Creating a team culture where finding bugs is celebrated rather than punished is
 
 <CardGrid>
   <Card title="Test to Fail" icon="approve-check">
-    The goal of testing is to find failures, not to confirm success. The most informative test is the one most likely to produce a failure.
+    A test is for finding failures. The test that teaches you most is the one most likely to fail.
   </Card>
 
   <Card title="Confirmation Bias Is Your Enemy" icon="warning">
-    You naturally gravitate toward tests you expect to pass. Fight this by deliberately designing tests intended to break your system.
+    You lean toward tests you expect to pass. Design tests that are meant to break the system.
   </Card>
 
   <Card title="Absence of Evidence Is Not Evidence of Absence" icon="star">
-    "No bugs found" does not mean "no bugs exist." It means your tests did not catch them. This distinction cost seven lives on Challenger.
+    "No faults found" does not mean "no faults exist". It means that your tests did not find them. On Challenger this difference cost seven lives.
   </Card>
 
   <Card title="Write Tests Before Code" icon="open-book">
-    Defining your falsification criteria before you have something to test eliminates the bias of testing what you know works.
+    State what counts as failure before you have something to test. Then your knowledge of the design cannot shape the test.
   </Card>
 </CardGrid>
 
 ### Looking Ahead
 
-You now have Popper's toolkit for evaluating individual claims and tests. In the next lesson, we zoom out and ask a bigger question: how does entire fields of knowledge change? Thomas Kuhn's theory of paradigm shifts explains why communities resist new ideas, why technology transitions are so painful, and how to recognize when the ground is shifting beneath your feet.
+Popper's question deals with one claim or one test. The lesson on [paradigm shifts](/education/philosophy-of-science-engineering/paradigm-shifts-how-knowledge-evolves/) asks how a whole field changes its mind. Thomas Kuhn's account explains why communities resist new ideas and why a change of technology is slow and painful.
 
 ## Exercises
 
 <InArticleAd />
 
 
-1. **Happy path audit.** Take an existing test plan from one of your projects. What percentage of tests are "happy path" (testing expected behavior with valid inputs)? Add at least five negative tests targeting boundary conditions, invalid inputs, or error handling paths.
+1. **Happy path audit.** Take a test plan or a commissioning checklist from one of your projects. What share of its tests are happy path? Add at least five negative tests: edges of the range, invalid inputs, failed sensors, loss of power.
 
-2. **Challenger analysis.** Reread the Challenger case study. Identify the specific logical error in NASA management's reasoning. Write the correct question they should have asked and the framework for answering it.
+2. **Challenger analysis.** Read the Challenger case again. State the error in the managers' reasoning in one sentence. Write the question they should have asked, and the evidence that would have answered it.
 
-3. **Fuzz test design.** Choose a communication interface in one of your projects (UART, SPI, I2C, HTTP API). Design a fuzz testing protocol: what inputs will you randomize, how will you detect failures, and how many iterations will you run?
+3. **Fuzz test design.** Choose a communication interface in one of your projects (a serial line, a fieldbus, a web API). Design a fuzz test: which inputs will you make random, how will you detect a failure, and how many inputs will you send?
 
-4. **Design review question.** At your next design review (or in a review of your own work), ask: "How hard did you try to prove this wrong?" Document the response and any gaps it reveals.
+4. **Design review question.** At your next design review, or in a review of your own work, ask: "How hard did you try to prove this wrong?" Write down the answer and the gaps it shows.
 
 <PhilosophyOfScienceEngineeringComments />
 

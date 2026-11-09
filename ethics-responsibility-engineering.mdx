@@ -25,57 +25,60 @@ import { Card, CardGrid, Badge, Steps, LinkButton, FileTree } from '@astrojs/sta
 
 import PhilosophyOfScienceEngineeringComments from '../../../../components/philosophy-of-science-engineering/PhilosophyOfScienceEngineeringComments.astro';
 
-Engineers do not just solve technical problems. They make decisions that determine whether bridges stand or fall, whether medical devices heal or harm, whether software protects or endangers. That power comes with moral obligations that no amount of technical skill can replace. This lesson examines real engineering disasters, the ethical failures behind them, and the professional frameworks designed to keep the public safe. #EngineeringEthics #Responsibility #SafetyFirst
+The commissioning sheet for a new cold room has six lines, and one of them says that the high temperature alarm was tested. It was not tested. The client is waiting, and your supervisor says: "Sign it. It always works." Six months later the alarm fails silently on a hot weekend, and the sheet with your name on it says that it worked. Most ethical questions in engineering arrive in this ordinary way. This lesson sets out what an engineer owes, shows three well known disasters in which those duties were broken, and takes you through one case of your own, step by step. #EngineeringEthics #Responsibility #SafetyFirst
 
 ## The Weight of Engineering Decisions
 
-Every time you select a material, write a control algorithm, or sign off on a design, you are making a decision that may affect people who will never know your name. The bridge you design will carry thousands of commuters. The firmware you write may control a device that a patient depends on. The sensor system you deploy may generate data that shapes decisions about people's lives.
+When you choose a part, set an alarm limit or sign a test sheet, you decide something for people who will never know your name: the operator who trusts the alarm, the family that drinks the water, the patient under the machine.
 
 <Card title="Core Principle" icon="warning">
-Engineering ethics is not abstract philosophy. It is the practical discipline of ensuring that technical decisions protect human welfare. When engineers get it wrong, people die.
+Engineering ethics is practical. It is the discipline of making technical decisions that protect people, and it rests on five duties.
 </Card>
 
-This is not hypothetical. The following case studies are real, documented, and deeply instructive.
+1. Put the safety of people first.
+2. Be honest about what was measured and what was not.
+3. Work within your competence, and say when a task is outside it.
+4. Speak up when you see a danger.
+5. Keep records that are true.
+
+The three cases that follow are real and well documented. In each one, look for the duty that was broken.
 
 ## Case Study: The Therac-25
 
 <InArticleAd />
 
 
-Between 1985 and 1987, the Therac-25 radiation therapy machine delivered massive radiation overdoses to at least six patients. Three of them died. The cause was a combination of software bugs, hardware design choices, and organizational failures.
+Between 1985 and 1987, the Therac-25 radiation therapy machine delivered massive radiation overdoses to at least six patients. Three of them died.
 
 ### What Happened
 
-The Therac-25 was a linear accelerator used to treat cancer patients with targeted radiation. It had two modes: a low-power electron beam for direct treatment and a high-power X-ray mode that used a metal target to convert the electron beam into X-rays.
+The Therac-25 treated cancer with a beam of radiation. It had a low power mode, and a high power mode in which a metal target had to stand in the path of the beam.
 
-In previous models (Therac-6 and Therac-20), hardware interlocks physically prevented the high-power beam from firing without the metal target in place. The Therac-25 removed these hardware interlocks and relied entirely on software to ensure the correct configuration.
+In the earlier models, hardware interlocks (physical devices that block a dangerous state) made it impossible to fire at high power without the target. The Therac-25 removed these interlocks and relied on software alone.
 
-The software had a race condition. If an operator typed commands fast enough (changing from X-ray mode to electron mode), the software could set the beam energy to the high-power level while the metal target was retracted. The result was a full-power electron beam hitting the patient directly, delivering doses hundreds of times higher than intended.
+The software had a race condition, a fault in which the result depends on the timing of events. If the operator changed the mode quickly, the machine could fire at high power with the target out of the path. The patient received a dose hundreds of times higher than intended.
 
 ### What Went Wrong Technically
 
-| Technical Failure | Description |
+| Technical failure | Description |
 |------------------|-------------|
-| Race condition | Software did not properly synchronize mode selection with beam energy setting |
-| No hardware interlocks | Safety-critical function delegated entirely to software |
-| Inadequate error messages | Machine displayed "MALFUNCTION" with a number that operators could not interpret |
-| No dose monitoring | No independent hardware check on actual delivered dose |
-| Code reuse without review | Software was carried over from earlier models without full analysis of the changed hardware context |
+| Race condition | The software did not keep the mode and the beam energy in step |
+| No hardware interlocks | A safety function was left to software alone |
+| Poor error messages | The machine showed "MALFUNCTION" with a number that operators could not interpret |
+| No dose monitoring | No independent hardware checked the dose that was delivered |
+| Code reused without review | Software from earlier models was carried over without a full analysis of the changed hardware |
 
 ### What Went Wrong Ethically
 
-The technical bugs were serious, but the ethical failures were worse:
+The faults were serious. The conduct around them was worse.
 
-**The manufacturer dismissed reports.** When hospitals reported overdoses, AECL (the manufacturer) initially insisted the machine could not deliver an overdose. They trusted their software more than the evidence from patients.
-
-**Operators were blamed.** Early incident reports attributed the overdoses to operator error, not machine malfunction. The operators knew something was wrong but lacked the information to prove it.
-
-**No independent safety review.** The software was never subjected to an independent safety analysis. The same team that wrote it reviewed it.
-
-**No regulatory requirement for software safety.** At the time, the FDA did not have a clear framework for evaluating software in medical devices. The Therac-25 incidents directly led to changes in FDA regulation.
+- When hospitals reported overdoses, the maker, AECL, at first insisted that the machine could not deliver one. It trusted its software more than the evidence from patients.
+- Early reports blamed the operators. The operators knew that something was wrong and lacked the information to show it.
+- The software had no independent safety review. The team that wrote it also reviewed it.
+- At the time, the FDA had no clear framework for software in medical devices. The incidents led directly to changes in its regulation.
 
 <Card title="Lesson" icon="information">
-Software can kill. When software controls safety-critical functions, it must be treated with the same rigor as hardware safety systems. Removing hardware interlocks and relying solely on software is a design decision with ethical weight.
+When software controls a dangerous function, treat it with the same care as a hardware safety device. A site makes the Therac-25 choice when a controller program is the only thing between a pump and dry running, with no float switch behind it. And when the field reports that your product has hurt someone, the duty is to investigate, not to defend.
 </Card>
 
 ## Case Study: Boeing 737 MAX
@@ -83,50 +86,38 @@ Software can kill. When software controls safety-critical functions, it must be 
 <InArticleAd />
 
 
-In October 2018 and March 2019, two Boeing 737 MAX aircraft crashed, killing 346 people. The crashes were caused by a software system called MCAS (Maneuvering Characteristics Augmentation System) that repeatedly pushed the nose of the aircraft down based on a single faulty sensor reading.
+In October 2018 and March 2019, two Boeing 737 MAX aircraft crashed, killing 346 people. A software system called MCAS (Maneuvering Characteristics Augmentation System) repeatedly pushed the nose of the aircraft down, acting on a single faulty sensor reading.
 
 ### The Technical Problem
 
-The 737 MAX had larger, more fuel-efficient engines than the previous 737 NG. These engines were mounted further forward and higher on the wing, changing the aircraft's aerodynamic behavior. At high angles of attack, the new engine position created a nose-up pitching moment that could surprise pilots accustomed to the 737 NG.
+The 737 MAX had larger engines than the earlier 737 NG, mounted further forward and higher on the wing. At a high angle of attack (AoA), which is the angle between the wing and the oncoming air, the new engine position tended to push the nose up.
 
-Boeing's solution was MCAS: a software system that automatically pushed the nose down when a single angle-of-attack (AoA) sensor indicated a high angle. The system was designed to make the 737 MAX feel like the 737 NG to pilots, avoiding the need for expensive retraining in a full simulator.
+Boeing's answer was MCAS: software that pushed the nose down when an AoA sensor showed a high angle. It made the 737 MAX feel like the 737 NG to pilots, and so avoided expensive retraining in a full simulator.
 
 ### The Chain of Failures
 
-```mermaid
-flowchart TD
-    A[Single sensor dependency\nMCAS uses one AoA sensor] --> B[Excessive authority\n2.5 deg repeated activations]
-    B --> C[No pilot notification\nMCAS operates silently]
-    C --> D[Minimal training\nMCAS not in training materials]
-    D --> E[Regulatory capture\nBoeing self-certifies]
-    E --> F[Two crashes, 346 deaths]
-    style F stroke:#ef4444
-```
-
 <Steps>
-1. **Single sensor dependency.** MCAS relied on a single AoA sensor. The 737 MAX had two AoA sensors, but MCAS only used the one on the captain's side. If that sensor failed or gave erroneous data, MCAS would activate based on false information.
-2. **Excessive authority.** In its original design, MCAS could move the horizontal stabilizer by 0.6 degrees per activation. After flight testing revealed it was not aggressive enough, Boeing increased it to 2.5 degrees and allowed repeated activations, giving the system enough authority to overpower the pilots.
-3. **No pilot notification.** MCAS operated silently. Pilots did not know when it was active. The disagree light that would have alerted pilots to mismatched AoA sensors was an optional feature that most airlines did not purchase.
-4. **Minimal training.** Boeing marketed the 737 MAX as requiring only a short tablet-based training course instead of simulator training. MCAS was not mentioned in the initial training materials.
-5. **Regulatory capture.** Boeing had been granted authority to self-certify many aspects of the aircraft. FAA oversight was reduced through a program called Organization Designation Authorization (ODA). Engineers within Boeing who raised safety concerns were overruled by management focused on schedule and cost.
+1. **Single sensor dependency.** MCAS relied on a single AoA sensor. The 737 MAX had two AoA sensors, but on any one flight MCAS used only one of them (the two were used on alternate flights, and never compared). If that sensor failed or gave erroneous data, MCAS would activate based on false information.
+2. **Excessive authority.** In its original design, MCAS could move the horizontal stabilizer by 0.6 degrees per activation. After flight testing, Boeing increased this to 2.5 degrees and allowed repeated activations, which gave the system enough authority to overpower the pilots.
+3. **No pilot notification.** MCAS operated silently. The light that would have told pilots that the two AoA sensors disagreed was an optional feature, and most airlines did not buy it.
+4. **Minimal training.** Boeing marketed the 737 MAX as needing only a short course on a tablet. MCAS was not mentioned in the first training materials.
+5. **Weak oversight.** Under a program called Organization Designation Authorization (ODA), Boeing had been given authority to approve many aspects of the aircraft on behalf of the regulator, the FAA. Engineers within Boeing who raised safety concerns were overruled by management focused on schedule and cost.
 </Steps>
 
 ### Comparison with Airbus Philosophy
 
-The contrast with Airbus's design philosophy is instructive. Airbus fly-by-wire systems use multiple redundant computers with dissimilar software (different teams write code for the same function independently). The systems cross-check each other continuously. When sensors disagree, the system alerts the pilot rather than silently acting on one sensor's data.
+Airbus A320 family aircraft use three AoA sensors. The flight control computers compare all three and use a voting scheme to reject a faulty reading. The 737 MAX had two sensors and gave only one to MCAS.
 
-Airbus A320 family aircraft use three AoA sensors. The flight control computers compare all three and use a voting scheme to reject faulty readings. The Boeing 737 MAX used two AoA sensors but fed only one to MCAS. The cost difference between using one sensor input and three was trivial compared to the aircraft's total cost, but the safety difference was enormous.
+The same rule holds on any site: an action that matters should not rest on one sensor that nothing checks.
 
 ### The Ethical Dimensions
 
-**Engineers raised concerns and were ignored.** Internal communications released during investigations showed that Boeing engineers and test pilots had serious concerns about MCAS. One test pilot described the system as "egregious" in a 2016 message. These concerns did not reach decision-makers, or when they did, they were overridden by schedule pressure.
-
-**Financial incentives distorted safety decisions.** The 737 MAX existed because Boeing needed to compete with the Airbus A320neo quickly. Designing a new aircraft would have taken years and cost billions. Modifying the existing 737 was faster and cheaper but introduced the aerodynamic problems that MCAS was designed to mask.
-
-**Transparency was sacrificed.** Boeing did not fully disclose MCAS to airlines, pilots, or regulators. The system was buried in documentation. When the first crash occurred (Lion Air 610), Boeing issued a bulletin but did not ground the fleet. The second crash (Ethiopian Airlines 302) happened five months later.
+- Engineers raised concerns and were not heard. Internal messages released during the investigations showed that Boeing engineers and test pilots had serious concerns about MCAS. One test pilot described the system as "egregious" in a 2016 message.
+- Money shaped the safety decisions. Boeing needed to compete quickly with the Airbus A320neo. Modifying the existing 737 was faster and cheaper than a new aircraft, and it introduced the behavior that MCAS was designed to hide.
+- Transparency was given up. Boeing did not fully disclose MCAS to airlines, pilots or regulators. After the first crash (Lion Air 610), Boeing issued a bulletin and did not ground the fleet. The second crash (Ethiopian Airlines 302) happened five months later.
 
 <Card title="Lesson" icon="warning">
-When organizational pressure to meet schedules and reduce costs conflicts with safety, safety must win. Engineers have a professional obligation to escalate safety concerns through every available channel. "I raised it but was overruled" is not sufficient if lives are at stake.
+When pressure of time and cost conflicts with safety, safety must win. If you raise a danger to life and are overruled, your duty is not finished: take it to the next person who has the authority to act.
 </Card>
 
 ## Case Study: Volkswagen Emissions Scandal
@@ -134,40 +125,59 @@ When organizational pressure to meet schedules and reduce costs conflicts with s
 <InArticleAd />
 
 
-In September 2015, the U.S. Environmental Protection Agency revealed that Volkswagen had installed software in 11 million diesel vehicles worldwide that detected when the vehicle was undergoing emissions testing and reduced nitrogen oxide emissions during the test. Under normal driving conditions, the vehicles emitted up to 40 times the legal limit of NOx.
+In September 2015, the U.S. Environmental Protection Agency revealed that Volkswagen had installed software in 11 million diesel vehicles worldwide that detected an emissions test and reduced nitrogen oxide (NOx) emissions during the test. In normal driving the vehicles emitted up to 40 times the legal limit of NOx.
 
 ### How It Worked
 
-The "defeat device" was software running on the engine control unit (ECU). It monitored steering wheel position, vehicle speed, engine operation duration, and barometric pressure. When the pattern matched the profile of a standardized emissions test (the vehicle was stationary on a dynamometer, wheels turning but steering wheel fixed), the software activated a low-emissions mode. In all other driving conditions, the software prioritized performance and fuel economy over emissions compliance.
+The "defeat device" was software in the engine control unit. It watched the steering wheel position, the speed and other signals. When the pattern matched a standard test, with the wheels turning and the steering wheel fixed, it switched to a low emissions mode. On the road it favored performance and fuel economy.
 
 ### The Engineering Ethics
 
-This was not a bug. It was not an oversight. Engineers deliberately wrote software to deceive regulators and the public. The code was designed, reviewed, tested, and deployed with full knowledge of its purpose.
+This was not a bug or an oversight. Engineers wrote, reviewed and tested software whose purpose was to deceive.
 
-**"I was told to" is not an excuse.** Several VW engineers claimed they were following orders from management. Professional engineering ethics codes are explicit: the engineer's primary obligation is to the public, not to their employer. When an employer asks you to do something that endangers public health, you are obligated to refuse.
-
-**The harm was real and quantifiable.** Researchers at MIT estimated that the excess emissions from VW diesel vehicles in the United States alone contributed to approximately 1,200 premature deaths in Europe and 59 in the United States. These are not abstract numbers. They represent people who died from respiratory and cardiovascular disease caused by air pollution that should not have existed.
-
-**The cover-up was sustained.** VW continued to deny the existence of defeat device software for over a year after researchers at West Virginia University detected the discrepancy between test results and real-world emissions. Internal communications show that engineers and managers discussed how to handle the situation without admitting the truth.
+- "I was told to" is not an excuse. Several VW engineers said that they were following orders from management. The codes of engineering ethics are explicit: the first obligation is to the public, not to the employer.
+- The harm was real. Researchers at MIT estimated that the excess emissions contributed to approximately 59 premature deaths in the United States (from the vehicles sold there) and approximately 1,200 in Europe (from the vehicles sold in Germany).
+- The denial lasted. VW denied the defeat device for over a year after researchers at West Virginia University found the difference between test results and emissions on the road.
 
 | Aspect | Detail |
 |--------|--------|
-| Vehicles affected | ~11 million worldwide |
+| Vehicles affected | About 11 million worldwide |
 | Duration of deception | 2009 to 2015 (at least 6 years) |
 | Financial penalties | Over 30 billion USD in fines and settlements |
 | Criminal convictions | Several engineers and executives sentenced to prison |
-| Health impact | Estimated 1,200+ premature deaths from excess NOx |
 
 <Card title="Lesson" icon="warning">
-There is no version of "the company told me to" that justifies writing software designed to deceive regulators and endanger public health. Professional ethics exist precisely for situations where your employer's interests conflict with the public interest.
+A test that has been arranged to pass says nothing about the product. No instruction from an employer justifies a result that is made to deceive the people who rely on it.
 </Card>
+
+Few engineers will ever write a defeat device. Many will be asked to record a test that was not done, which is a small form of the same act.
+
+## A worked case: the reading you did not take
+
+You have commissioned a cold room for a food store. The handover sheet has six lines. You saw five of the tests. The sixth line reads "High temperature alarm tested and received on the night guard's phone", and that test was not done, because the SIM card for the alarm unit has not arrived. Your supervisor says: "Sign it. It is the same unit that we always fit, and the client pays on the signed sheet."
+
+<Steps>
+1. **Name who relies on the line.** The owner will fill the room with stock because of this sheet. If the alarm does not reach a person, a failure on a weekend is found on Monday.
+
+2. **Separate what you measured from what you believe.** Measured: the room reached 4 °C and held it for 24 hours, and the alarm unit has power. Believed and not measured: that an alarm message reaches a phone. "It always works" is a statement about other units.
+
+3. **List the choices.** Sign all six lines, which makes one of them false. Refuse to sign anything, which hides five true results. Or sign the five and write on the sixth: "Not tested. SIM card not fitted. The alarm does not reach a person until this test is done."
+
+4. **Reduce the risk while the gap is open.** Propose that a named person reads the room thermometer twice a day and writes it down until the alarm is tested. Set the date of the test.
+
+5. **Tell the people who must know.** The supervisor and the owner receive the same sheet. If the supervisor asks you to remove the note, say plainly that you cannot sign for a test you did not see.
+
+6. **Decide.** You sign the five lines, record the sixth as not tested, and return in one week to test it.
+</Steps>
+
+The cost today is a difficult conversation and perhaps a late payment. In return the sheet says what is true, and the person who relies on it knows what it does not cover. Nobody was accused and nothing was reported outside the company. Most of an engineer's ethics is of this ordinary kind.
 
 ## Professional Codes of Ethics
 
 <InArticleAd />
 
 
-Engineering professional societies have developed codes of ethics that provide explicit guidance. While the specific wording varies, the core principles are consistent.
+The five duties are not this lesson's invention. Engineering societies publish codes of ethics, and their main points agree.
 
 ### Common Principles
 
@@ -195,39 +205,43 @@ The National Society of Professional Engineers states:
 - Engineers shall conduct themselves honorably, responsibly, ethically, and lawfully
 </TabItem>
 <TabItem label="The Common Thread">
-Every major engineering ethics code puts the same principle first: **public safety comes before employer loyalty, personal gain, or professional convenience.**
+Every major code of engineering ethics puts the same principle first: **the safety of the public comes before loyalty to an employer, personal gain or convenience.**
 
-This is not a suggestion. In jurisdictions where engineering is a licensed profession, violating this principle can result in loss of licensure, legal liability, and criminal prosecution.
+This is not a suggestion. Where engineering is a licensed profession, an engineer who breaks this principle can lose the license.
 </TabItem>
 </Tabs>
 
 ### When Codes Conflict with Reality
 
-Ethics codes are clear on paper. In practice, following them can be difficult:
+The codes are clear on paper. On site they meet pressure:
 
-- Your manager asks you to approve a design you believe is marginal. Do you refuse and risk your job?
-- A deadline is approaching and the test results are ambiguous. Do you ask for more testing and miss the deadline?
-- You discover a safety issue in a product that is already shipping. Do you report it, knowing it will cost the company millions?
+- Your supervisor asks you to sign for a test that you did not see.
+- The client wants the pump started today, and its dry running protection is not yet wired.
+- You find that an alarm fitted after an accident has been silenced, because it sounded too often.
 
-The codes are unambiguous: safety comes first. But engineers who follow this principle often face professional consequences. This is why whistleblower protections and strong professional communities matter.
+The codes give the same answer each time: the safety of people first, and no false statement. They do not say that this is free. People who follow them sometimes pay for it, and so the way in which you raise a concern matters.
 
 ## Whistleblowing: When and How
 
 <InArticleAd />
 
 
-Whistleblowing is the act of reporting safety concerns, illegal activity, or ethical violations to authorities, regulators, or the public when internal channels have failed.
+Whistleblowing means reporting a danger, an illegal act or an ethical violation to an authority, a regulator or the public after the channels inside the organization have failed. It is the last step of speaking up. Most concerns are settled long before it:
+
+1. Tell the person who can fix the problem, on the same day, in plain words.
+2. If nothing changes, write to your supervisor: what you saw, what you measured, what could happen.
+3. If the danger remains, take the same note to the next level of authority or to the person responsible for safety.
 
 ### When Is Whistleblowing Justified?
 
-Most ethics frameworks agree that whistleblowing is justified when:
+Most ethics frameworks agree on five conditions:
 
 <Steps>
-1. There is a serious and specific threat to public safety or welfare
-2. The engineer has identified the threat through professional competence (not rumor or speculation)
-3. Internal reporting channels have been tried and have failed to resolve the issue
-4. The engineer has documented the concern and the organization's response
-5. The potential harm of not reporting outweighs the potential harm of reporting
+1. The threat to the safety or welfare of people is serious and specific.
+2. You know of it through your professional competence, not through rumor.
+3. You have tried the internal channels, and they have failed.
+4. You have recorded the concern and the organization's response.
+5. The harm of staying silent is greater than the harm of reporting.
 </Steps>
 
 ### The Personal Cost
@@ -236,81 +250,74 @@ Whistleblowers face real consequences. Roger Boisjoly, a Morton Thiokol engineer
 
 After the disaster, Boisjoly testified before a presidential commission. He was praised publicly but effectively blacklisted within the aerospace industry. He suffered depression and PTSD. He spent the rest of his career advocating for engineering ethics education.
 
-The 737 MAX case included similar dynamics. Engineers who raised MCAS concerns were sidelined or ignored. The organizational culture at Boeing had shifted from engineering-led to finance-led, and voices that contradicted the business case were unwelcome.
-
 ### Protecting Whistleblowers
 
-Many countries have legal protections for whistleblowers, though enforcement varies:
+Many countries have laws meant to protect people who report in good faith:
 
-| Jurisdiction | Key Legislation |
+| Jurisdiction | Key legislation |
 |-------------|----------------|
 | United States | Whistleblower Protection Act, Sarbanes-Oxley (for publicly traded companies) |
 | European Union | EU Whistleblower Directive (2019) |
 | United Kingdom | Public Interest Disclosure Act |
-| Kenya | Witness Protection Act |
 
-Legal protection helps, but it does not eliminate the personal cost. Building a professional network, documenting everything, and seeking legal advice early are practical steps.
+These laws differ from country to country, and so does their enforcement. Find out what applies where you work before you need it. No law removes the personal cost.
 
 ## Design for Safety
 
 <InArticleAd />
 
 
-Ethics is not just about reacting to problems. It is about designing systems that minimize the chance of harm in the first place.
+The best time to meet these duties is at the design stage, before anyone has to speak up.
 
 ### Fail-Safe, Fail-Secure, Fail-Operational
 
+A design must say what the system does when a part of it fails. There are three answers.
+
 <CardGrid>
   <Card title="Fail-Safe" icon="approve">
-    On failure, the system enters a state that minimizes harm. A railroad crossing gate drops if power fails. A chemical valve closes if control signals are lost. The priority is preventing damage.
+    On failure, the system goes to the state that does least harm. A cold room alarm is wired so that a broken wire or a loss of power raises the alarm. A pump stops when its level sensor gives no signal.
   </Card>
   <Card title="Fail-Secure" icon="approve">
-    On failure, the system maintains security. A secure door locks if power fails. An encrypted channel drops the connection rather than transmitting unencrypted data. The priority is preventing unauthorized access.
+    On failure, the system stays locked. A store room door remains locked when the power fails. The priority is to prevent entry.
   </Card>
   <Card title="Fail-Operational" icon="approve">
-    On failure, the system continues operating at reduced capability. A dual-engine aircraft flies on one engine. A RAID array serves data after a disk failure. The priority is maintaining function.
+    On failure, the system continues at reduced capacity. A site with two pumps runs on one. A generator carries the essential loads when the grid fails.
   </Card>
 </CardGrid>
 
-The choice between these modes is itself an ethical decision. A fire exit must fail-open (anyone can exit), not fail-secure (door locks). A nuclear reactor must fail-safe (control rods insert automatically), not fail-operational (keep running despite anomalies).
+The choice between them is an ethical decision. A fire exit must fail open, so that anyone can leave, even in a building where every other door fails secure.
 
 ### Safety Margins Are Not Optional
 
-When you design a structure to withstand 100 kN but the calculation shows it only needs to handle 50 kN, the extra capacity is not waste. It absorbs:
+A beam must carry 50 kN and is designed to withstand 100 kN. The extra capacity is not waste. It covers what you do not know:
 
-- Uncertainty in the load estimate
-- Uncertainty in the material properties
-- Degradation over time (corrosion, fatigue, wear)
-- Loads that were not anticipated in the design
-- Manufacturing variations
+- the true load
+- the true strength of the material
+- corrosion, fatigue and wear over the years
+- loads that nobody expected
+- variation in manufacture
 
-Cutting safety margins to save cost is a decision with ethical implications. If a failure will endanger human life, the margin must be there regardless of budget pressure.
+A margin that is cut to save cost has been spent, not saved. Where a failure would endanger a person, the margin stays, whatever the budget.
 
 ### The Swiss Cheese Model
 
-James Reason's Swiss cheese model of accident causation describes how catastrophic failures occur when multiple layers of defense all have holes, and those holes happen to align. Each layer (design review, testing, quality control, operational procedures, safety monitoring) has imperfections. Most of the time, a hole in one layer is covered by the next layer. Accidents happen when the holes line up.
+James Reason's Swiss cheese model explains how serious accidents happen in systems that have several protections. Each layer of defense (design review, testing, operating procedures, alarms) has holes. Most of the time a hole in one layer is covered by the next layer. An accident happens when the holes line up.
 
 ```text
-  The Swiss Cheese Model (James Reason)
-
-  Hazard                             Accident
-  =====>  |   |    |   |    |   |    =====>
-          | o |    |   |    | o |
-  =====>  |   |    | o |    |   |    =====>
-          |   |    |   |    |   |
-  =====>  | o-|----|-o-|----|-o-|->  FAILURE
-          |   |    |   |    |   |
-  =====>  |   |    |   |    | o |    =====>
-          |   |    |   |    |   |
-         Layer 1  Layer 2  Layer 3
-         Design   Testing  Operations
-         Review   & QC     & Monitoring
-
-  Each layer has holes (imperfections).
-  Accidents happen when holes align.
+           Layer 1    Layer 2    Layer 3
+           Design     Testing    Operation
+              │          │          │
+  hazard ────>│          │          │   stopped
+              │          │          │
+  hazard ─────○─────────>│          │   stopped
+              │          │          │
+  hazard ─────○──────────○─────────>│   stopped
+              │          │          │
+  hazard ─────○──────────○──────────○──> ACCIDENT
+              │          │          │
 ```
 
-Every case study in this lesson fits the Swiss cheese model:
+Each circle is a hole in a layer. Every case study in this lesson fits the model:
 
 | Case | Layer 1 Failure | Layer 2 Failure | Layer 3 Failure |
 |------|----------------|-----------------|-----------------|
@@ -318,133 +325,103 @@ Every case study in this lesson fits the Swiss cheese model:
 | 737 MAX | Single-sensor MCAS design | Inadequate pilot training | FAA delegated oversight to Boeing |
 | VW Emissions | Engineers wrote defeat device | Internal compliance failed to catch it | Regulators relied on lab tests only |
 
-The model shows that safety is not about preventing individual errors. It is about ensuring that no single error can propagate through all layers of defense to cause harm. This is a design problem, an organizational problem, and an ethical problem all at once.
+The model also shows why a silenced alarm matters. An alarm fitted after an accident is a new layer. When operators silence it because it sounds too often, the layer is still on the drawing and no longer in the plant. Nobody decided to remove a protection, and it has been removed.
 
 ## The Trolley Problem Is Irrelevant
 
 <InArticleAd />
 
 
-Philosophy courses often discuss the trolley problem: should you divert a runaway trolley to kill one person instead of five? This thought experiment is fascinating for moral philosophers but largely irrelevant for practicing engineers.
+Philosophy courses often discuss the trolley problem: should you turn a runaway trolley so that it kills one person and not five? It is of little use to a working engineer. Real engineering ethics is rarely a choice of who is harmed. It is:
 
-Real engineering ethics is not about choosing who dies. It is about:
+- following the procedures for design, test and review
+- an independent check before the work reaches the field
+- reporting results accurately, including the inconvenient ones
+- recording decisions and the reasons for them
+- saying what you do not know
 
-- **Process:** Following rigorous design, testing, and review procedures
-- **Oversight:** Ensuring independent checks catch errors before they reach the field
-- **Honesty:** Reporting results accurately, including inconvenient results
-- **Transparency:** Documenting decisions and their rationale so they can be reviewed
-- **Humility:** Acknowledging what you do not know and designing accordingly
+Where these are in place, the dramatic choice seldom arises.
 
-If your engineering practice includes these elements, the trolley problem never arises. Catastrophic failures happen when one or more of these elements is missing.
-
-## IoT and AI Ethics: New Questions
+## Monitoring and data: new questions
 
 <InArticleAd />
 
 
-Modern engineering increasingly involves systems that operate autonomously, collect personal data, and make decisions without human oversight. These systems raise ethical questions that traditional engineering ethics did not anticipate.
+A monitoring system on a pump or a cold room measures machines. It also records people: when the door was opened, who was on shift when the alarm sounded, how long the operator took to answer.
 
 ### Who Is Responsible?
 
-When an autonomous vehicle strikes a pedestrian, who is responsible? The software engineer who wrote the perception algorithm? The project manager who approved the release? The company that marketed the vehicle? The regulatory body that approved it for road use?
-
-Traditional product liability focuses on the manufacturer. But when a system's behavior emerges from machine learning trained on data collected from millions of users, the chain of responsibility is less clear.
+When a remote system shows a fault and nobody acts, who answers for it: the installer, the person who set the limits, the operator on duty, or the owner? Decide before the first alarm. Write down who receives each alarm, who must act, and within what time. An alarm that goes to everyone belongs to no one.
 
 ### Data Ethics
 
-IoT sensors collect vast amounts of data about people, places, and activities. A temperature sensor in an office building seems innocuous. But combined with occupancy sensors, access logs, and network activity, the same system becomes a surveillance infrastructure that tracks when each employee arrives, where they spend their time, and who they meet with.
-
-Engineers who design these systems have an obligation to consider not just the intended use but the potential for misuse.
-
-### Algorithmic Bias
-
-Machine learning systems trained on historical data can perpetuate and amplify existing biases. A hiring algorithm trained on past hiring decisions will learn whatever biases existed in those decisions. A predictive policing algorithm trained on arrest data will reflect the biases in policing patterns.
-
-Engineers building these systems cannot claim neutrality. The choice of training data, the definition of the objective function, and the selection of features all embed values and assumptions that affect people's lives.
-
-### The Responsibility Gap
-
-A traditional engineering failure has a traceable chain of causation: the bolt was underspecified, the weld was flawed, the calculation was wrong. Someone made a specific decision that can be identified and evaluated.
-
-With autonomous systems, the chain of causation passes through layers of abstraction:
-
-<Steps>
-1. **Data collection:** Who decided what data to include and exclude from the training set?
-2. **Model architecture:** Who chose the algorithm and its parameters?
-3. **Training process:** Who evaluated whether the trained model was "good enough"?
-4. **Deployment decision:** Who approved the system for use in the real world?
-5. **Runtime behavior:** The system makes decisions that no human explicitly programmed, based on patterns learned from data.
-</Steps>
-
-At step 5, the system may produce outcomes that nobody intended, predicted, or even understands. This is the responsibility gap: there may be no single person whose decision caused the harm, yet the harm is real.
-
-Closing this responsibility gap requires new approaches: mandatory logging of decision processes, human-in-the-loop requirements for high-stakes decisions, regular auditing of system outputs for bias and errors, and clear organizational accountability structures that assign responsibility even when causation is diffuse.
+Door records and temperature records, taken together, show when each person arrives, how often the door is left open, and on whose shift. Data collected to protect the stock can be used to judge the staff. That may be fair, but people should be told first. Operators who feel that a system is used against them learn to defeat it: the door sensor gets a magnet, and the readings are written from memory.
 
 ### Privacy by Design
 
-The most effective approach to data ethics is not to add privacy protections after the system is built but to embed them from the start:
+Protections for people are cheapest when they are part of the first design:
 
 | Principle | Implementation |
 |-----------|---------------|
-| Data minimization | Collect only what is strictly necessary for the function |
+| Data minimization | Collect only what the function needs |
 | Purpose limitation | Use data only for the stated purpose |
 | Storage limitation | Delete data when it is no longer needed |
-| Anonymization | Remove identifying information whenever possible |
-| Access control | Limit who can see what data, with audit logs |
-| Transparency | Tell users what data is collected and why |
+| Anonymization | Remove names where the function does not need them |
+| Access control | Limit who can see which data, and record who looked |
+| Transparency | Tell people what is collected and why |
 
-These are not just good engineering practices. In many jurisdictions (EU's GDPR, Kenya's Data Protection Act, California's CCPA), they are legal requirements.
+In many jurisdictions (EU's GDPR, Kenya's Data Protection Act, California's CCPA), these are also legal requirements.
 
 ## An Ethics Checklist for Design Review
 
 <InArticleAd />
 
 
-Practical ethics requires practical tools. The following checklist can be used during any design review:
+These questions fit any design review or handover:
 
 <Steps>
-1. **Who is affected by this design?** List all stakeholders, including people who will use the product, people who will be near it, people whose data it will collect, and people who will maintain it.
-2. **What happens if it fails?** Enumerate failure modes and their consequences. Which failures endanger human safety?
-3. **What are the safety margins?** Are they adequate for the uncertainties involved? Has anyone pressured you to reduce them?
-4. **Is there independent oversight?** Has someone outside the design team reviewed the safety-critical aspects?
-5. **Are test results reported honestly?** Including the results that do not support the design?
-6. **What data does this system collect?** Who has access? Could it be used for purposes beyond the original intent?
-7. **Who cannot speak for themselves?** Children, elderly users, people with disabilities, future generations, ecosystems. Have their needs been considered?
-8. **Would you be comfortable if this decision were public?** If the details of your design tradeoffs appeared in a newspaper, would you be able to defend them?
+1. **Who is affected?** The users, the people nearby, the people whose data is recorded, and the people who will maintain it.
+2. **What happens if it fails?** List the failure modes. Which ones endanger a person?
+3. **What are the safety margins?** Are they enough for what is unknown? Has anyone pressed you to reduce them?
+4. **Is there an independent check?** Has someone outside the team reviewed the parts that matter for safety?
+5. **Are the test results reported honestly?** Including the results that do not support the design, and the tests that were not done?
+6. **What data does the system collect?** Who can see it? Could it be used for a purpose beyond the first one?
+7. **Who cannot speak for themselves?** Children, old people, people with disabilities, future generations. Have their needs been considered?
+8. **Would you be comfortable if this decision were public?** Could you defend the trade-offs to the people they affect?
 </Steps>
 
-No checklist replaces good judgment. But a checklist ensures that important questions are at least asked, even under time pressure.
+A checklist does not replace judgment. It makes sure that the questions are asked when time is short.
 
 ### Building an Ethics Culture
 
-A checklist is a starting point, but lasting ethical practice requires organizational culture. Individual engineers can influence culture even without authority:
+One person without authority can still change how a team behaves:
 
-- **Normalize safety discussions.** When someone raises a safety concern in a meeting, thank them publicly. Make it clear that raising concerns is valued, not penalized.
-- **Ask the uncomfortable questions.** If nobody is asking "what could go wrong?" in a design review, you start. The first time may feel awkward. The second time, others will join.
-- **Document ethical decisions.** When a tradeoff between cost and safety is made, record it. Not as an accusation, but as a decision record. "We chose X over Y because Z" is documentation that protects everyone.
-- **Mentor junior engineers.** Technical mentoring is common. Ethical mentoring is rare but equally important. Help junior engineers understand that "the client wants it this way" is not always sufficient justification.
+- When someone raises a safety concern, thank them in front of the others.
+- If nobody asks "what could go wrong?", ask it yourself.
+- When cost and safety are traded against each other, write down the decision and the reason: "We chose X over Y because Z." The next person can then see what was decided and why.
+- Help younger colleagues to see that "the client wants it this way" does not settle every question.
 
-Organizations where ethical concerns are routinely dismissed eventually produce a Therac-25, a 737 MAX, or a VW emissions scandal. Organizations where ethical concerns are routinely heard and addressed avoid these catastrophes, not because their engineers are smarter, but because their culture supports doing the right thing.
+An organization where concerns are dismissed again and again will one day produce its own Therac-25. One where they are heard avoids it, and the reason is its habits, not cleverer engineers.
 
 ## Exercises
 
 <InArticleAd />
 
 
-1. Read the full Nancy Leveson report on the Therac-25 incidents (available online as "Medical Devices: The Therac-25"). Identify three specific points where a different technical decision would have prevented patient harm. For each, explain the organizational or economic pressure that led to the actual decision.
+1. Read Nancy Leveson's report on the Therac-25 incidents (available online as "Medical Devices: The Therac-25"). Identify three points where a different technical decision would have prevented harm to a patient. For each, explain the pressure that led to the actual decision.
 
-2. Research the Challenger disaster and Roger Boisjoly's role. Write a one-page analysis of the decision-making process on the night before launch. Who made the final decision? What information was available? What was the organizational pressure? Would you have done what Boisjoly did?
+2. Research the Challenger disaster and Roger Boisjoly's role. Write one page on the decision made on the night before the launch. Who decided? What information was available? What was the pressure?
 
-3. Choose an IoT product you own or use (smart speaker, fitness tracker, connected thermostat). List every type of data it collects. For each data type, identify at least one use beyond the product's stated purpose that could affect users negatively.
+3. Choose a monitoring system that you use or know. List everything it records about people, as distinct from machines. For each item, name one use beyond the stated purpose that could harm the people recorded.
 
-4. Using the ethics checklist from this lesson, conduct a review of a project you are working on or have recently completed. Document your answers. Were there questions you had not considered before?
+4. Take a test sheet or a report that you signed recently. Mark each line as "I measured this", "someone told me" or "I assumed". What would you write differently?
 
 ## Summary
 
 <InArticleAd />
 
 
-Engineering ethics is not a theoretical exercise. It is the practical discipline of ensuring that the enormous power engineers hold over public safety, health, and welfare is exercised responsibly. The Therac-25 showed what happens when software safety is not taken seriously. The 737 MAX showed what happens when organizational pressure overrides engineering judgment. The Volkswagen scandal showed what happens when engineers deliberately betray the public trust. Professional codes of ethics exist to provide clear guidance: public safety comes first, always. Whistleblowing, though personally costly, is sometimes the only ethical option. And proactive design for safety, through fail-safe mechanisms, safety margins, and independent oversight, is the best way to ensure that ethical failures never reach the point where someone must choose between their career and the public good.
+An engineer owes five things: the safety of people first, honesty about what was and was not measured, work within their competence, a voice when there is danger, and records that are true. The Therac-25 shows a safety function left to software alone, and field reports that were not believed. The 737 MAX shows one unchecked sensor and concerns that were overruled. Volkswagen shows a test result made to deceive. The same duties apply to a commissioning sheet. Design for safety, with fail-safe states, margins and independent checks, means that fewer people ever face the hardest choice.
 
 <PhilosophyOfScienceEngineeringComments />
 
