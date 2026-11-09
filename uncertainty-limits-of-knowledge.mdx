@@ -53,7 +53,7 @@ Uncertainty passes through a calculation into the result. When independent measu
 
 Stress is force divided by area, $\sigma = F / A$. If the force $F$ is known to $\pm 3\%$ and the area $A$ to $\pm 2\%$, the stress $\sigma$ is uncertain by $\sqrt{3^2 + 2^2} = 3.6\%$. That can be the difference between a safe design and a marginal one.
 
-This is the reason for safety factors. They do not exist because engineers calculate badly. They exist because engineers are honest about how well they know their numbers.
+This is the reason for safety factors: not that engineers calculate badly, but that they are honest about how well they know their numbers.
 
 ### A worked case: is the cold room inside its limit?
 
@@ -135,7 +135,7 @@ Each chaotic system has a typical time, called the Lyapunov time, beyond which p
 | Double pendulum | Seconds |
 | Stock market prices | Practically zero for individual trades |
 
-If the horizon is long compared with the time your controller needs, you can control by prediction. If it is short, you must measure and correct all the time, which is feedback. The controller of a burner with a turbulent flame cannot predict the flow 10 seconds ahead. It can measure the present state and adjust at once. The uncertainty does not make control impossible. It changes the kind of control that works.
+If the horizon is long compared with the time your controller needs, you can control by prediction. If it is short, you must measure and correct all the time, which is feedback. The controller of a burner with a turbulent flame cannot predict the flow 10 seconds ahead. It can measure the present state and adjust at once. Uncertainty does not make control impossible; it changes the kind of control that works.
 
 ## Complexity and Emergence
 
@@ -165,7 +165,7 @@ Take traffic. Each driver follows simple rules: hold your speed, keep your dista
 
 ### Why Emergence Matters for Engineers
 
-You can test a part alone. The system that contains it may still surprise you. A pump that passes every test on the bench can cause pressure surges when it works with three others on one pipe. A beam that meets its specification can take part in a resonance when it is joined to other beams.
+A part that passes its tests alone can still surprise you in the system. A pump that passes every test on the bench can cause pressure surges when it works with three others on one pipe. A beam that meets its specification can take part in a resonance when it is joined to other beams.
 
 So test the parts, then test the system, and accept that some behaviour of the whole will appear only in service.
 
@@ -261,7 +261,7 @@ Engineers meet a different problem that looks similar, called the observer effec
 
 ### Probe Effects in Electronics
 
-An oscilloscope probe adds a small capacitance (typically 10 to 15 pF) and a parallel resistance (typically 10 megaohms) to the point it touches. On a slow circuit this changes nothing. On a fast, sensitive circuit the probe changes the signal, and you see a waveform that does not exist when the probe is removed. The measurement is accurate. It is a measurement of a different circuit.
+An oscilloscope probe adds a small capacitance (typically 10 to 15 pF) and a parallel resistance (typically 10 megaohms) to the point it touches. On a slow circuit this changes nothing. On a fast, sensitive circuit the probe changes the signal, and you see a waveform that does not exist when the probe is removed. The measurement is accurate, but of a different circuit.
 
 ### Observer Effects on Site
 
@@ -335,7 +335,7 @@ No single tool covers every uncertainty. Strong designs use several layers:
 5. **Maintenance** stops slow wear from weakening the other four
 </Steps>
 
-This is called defense in depth. It is used in nuclear engineering, in aviation and wherever failure is severe. No layer is perfect, but all layers failing together is far less likely than any one layer failing alone.
+This is called defense in depth. It is used in nuclear engineering, in aviation and wherever failure is severe. No layer is perfect, but all layers failing together is far less likely than any one layer failing alone. Picture slices of cheese with holes: a failure gets through only where the holes in every slice line up. The picture breaks in one place: real holes are not placed at random, and one common cause can line them up.
 
 ## "How Confident Should I Be?" as a Design Question
 

@@ -68,7 +68,7 @@ Confirmation bias is the habit of looking for, and remembering, the evidence tha
 ### How Confirmation Bias Infects Testing
 
 <Steps>
-1. **You choose the tests.** You write tests for the cases you thought of during design, and those are the cases you expect to pass. The cases you did not think of are the ones most likely to hide a fault.
+1. **You choose the tests.** You write tests for the cases you thought of during design, which you expect to pass. The cases you did not think of are the most likely to hide a fault.
 
 2. **You read the result kindly.** "The room reached 8.4 °C against a limit of 8.0 °C, but that is close enough." Did you check the specification, or did you want a pass?
 
@@ -226,7 +226,7 @@ The managers looked at the launches where nothing went wrong and concluded that 
 
 ### The Lesson for Engineers
 
-The claim that needed testing was "the O-ring seals work at 36 F", and 36 F was far below any flight in the record. Every design review and every decision to go ahead uses the same logic. Do not ask "can you prove there is a problem?" Ask "can you show that it is safe?" If you cannot, you are not ready.
+The claim that needed testing was "the O-ring seals work at 36 F", far below any flight in the record. Every design review and every decision to go ahead faces the same choice. Do not ask "can you prove there is a problem?" Ask "can you show that it is safe?" If you cannot, you are not ready.
 
 ## Test-Driven Development as Institutionalized Falsification
 
@@ -257,7 +257,7 @@ flowchart TD
 
 ### Why TDD Is Popperian
 
-Because the test comes first, you say what counts as failure before you have anything to test. A test written after the code is shaped by what you know of the code: you test the paths that you know succeed. That is confirmation bias built into the working method.
+Because the test comes first, you say what counts as failure before you have anything to test. A test written after the code tends to test the paths you know succeed: confirmation bias built into the working method.
 
 ### Beyond Software: Test-First Hardware
 
